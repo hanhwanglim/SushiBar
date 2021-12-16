@@ -3,15 +3,15 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <vector>
 
 class Camera {
  public:
   Camera(glm::vec3 position);
 
-  glm::vec3 position() { return this->_position; }
-  glm::vec3 front()    { return this->_front; }
-  glm::vec3 up()       { return this->_up; }
-  glm::vec3 target()   { return this->_position + this->_front; }
+  glm::vec3 position() { return _position; }
+  glm::vec3 target() { return _position + _front; }
+  glm::vec3 up() {return _worldUp; }
 
   void handleMouseEvent(float dx, float dy);
 
@@ -25,7 +25,7 @@ class Camera {
   float _yaw;
   float _pitch;
 
-  float mouseSensitivity = 0.1f;
+  float _mouseSensitivity;
 
   void updateCameraVectors();
 };

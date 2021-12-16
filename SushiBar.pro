@@ -10,11 +10,13 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    camera.cpp \
     main.cpp \
     sushi_bar.cpp \
     window.cpp 
 
 HEADERS += \
+    camera.h \
     sushi_bar.h \
     window.h
 

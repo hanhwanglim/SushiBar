@@ -1,10 +1,11 @@
 #include <QApplication>
 
-#include "widget.h"
+#include "window.h"
 
 int main(int argc, char* argv[]) {
   QApplication a(argc, argv);
-  Widget w;
-  w.show();
+  Window* window = new Window(nullptr);
+  window->resize(800, 800);
+  window->show();
   return a.exec();
 }

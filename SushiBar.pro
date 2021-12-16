@@ -1,4 +1,5 @@
 QT       += core gui
+LIBS     += -lglu32 -lopengl32
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -10,10 +11,14 @@ CONFIG += c++11
 
 SOURCES += \
     main.cpp \
-    widget.cpp
+    sushi_bar.cpp \
+    widget.cpp \
+    window.cpp 
 
 HEADERS += \
-    widget.h
+    sushi_bar.h \
+    widget.h \
+    window.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

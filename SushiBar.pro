@@ -12,14 +12,12 @@ CONFIG += c++11
 SOURCES += \
     camera.cpp \
     main.cpp \
-    mesh.cpp \
     model.cpp \
     sushi_bar.cpp \
     window.cpp
 
 HEADERS += \
     camera.h \
-    mesh.h \
     model.h \
     sushi_bar.h \
     window.h

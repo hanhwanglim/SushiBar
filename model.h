@@ -1,37 +1,18 @@
-#ifndef MODEL_H
-#define MODEL_H
-
-#include <assimp/postprocess.h>
-#include <assimp/scene.h>
-
-#include <QOpenGLShaderProgram>
-#include <assimp/Importer.hpp>
+#include <fstream>
+#include <iostream>
+#include <glm/glm.hpp>
 #include <string>
 #include <vector>
-
-#include "mesh.h"
 
 class Model {
  public:
   Model(const std::string& path);
 
-  bool loadModel(const std::string& path);
+  std::vector<glm::vec3> vertices;
+  std::vector<glm::vec3> normals;
+  std::vector<glm::vec2> texCoord;
 
-  void draw(QOpenGLShaderProgram* program);
-
- private:
-  std::vector<Texture> textures_loaded;
-  std::vector<Mesh> meshes;
-  std::string directory;
-
-  std::vector<Texture> loadMaterialTextures(aiMaterial* material,
-                                            aiTextureType type,
-                                            std::string typeName);
-                                            
-  void processNode(aiNode* node, const aiScene* scene);
-
-  Mesh processMesh(aiMesh* mesh, const aiScene* scene);
-
+  std::vector<unsigned int> vertexIndices;
+  std::vector<unsigned int> normalIndices;
+  std::vector<unsigned int> textureIndices;
 };
-
-#endif  // MODEL_H

@@ -25,6 +25,7 @@ class SushiBar : public QOpenGLWidget, protected QOpenGLFunctions {
   
   void cube();
   void drawAxis();
+  void drawCat();
 
   QOpenGLShaderProgram* program;
   Model* cat;
@@ -39,6 +40,7 @@ class SushiBar : public QOpenGLWidget, protected QOpenGLFunctions {
   void mouseMoveEvent(QMouseEvent* event) ;
   void mousePressEvent(QMouseEvent* event) ;
   void mouseReleaseEvent(QMouseEvent* event) ;
+
 
 };
 

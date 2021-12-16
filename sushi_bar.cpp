@@ -17,8 +17,7 @@ SushiBar::SushiBar(QWidget* parent) : QOpenGLWidget(parent) {
   connect(timer, &QTimer::timeout, this, QOverload<>::of(&SushiBar::update));
   timer->start(100);
 
-  program = new QOpenGLShaderProgram(this);
-  cat = nullptr;
+  cat = new Model("C:\\Users\\hanhw\\Desktop\\Computer Graphics\\SushiBar\\models\\cat_body.obj");
 }
 
 void SushiBar::cube() {
@@ -50,23 +49,32 @@ void SushiBar::drawAxis() {
   glEnd();
 }
 
+void SushiBar::drawCat() {
+    std::vector<glm::vec3> vertices = cat->vertices;
+    std::vector<glm::vec3> normals = cat->normals;
+    std::vector<unsigned int> vertexIndice = cat->vertexIndices;
+    std::vector<unsigned int> normalIndice = cat->normalIndices;
+    std::vector<unsigned int> textureIndice = cat->textureIndices;
+
+    glColor3f(1.0f, 0.0f, 0.0f);
+    glBegin(GL_TRIANGLES);
+    for (int i = 0; i < vertexIndice.size(); i++) {
+        int normalIndex = normalIndice[i] - 1;
+        glm::vec3 normal = normals[normalIndex];
+        glNormal3f(normal.x, normal.y, normal.z);
+
+        int vertexIndex = vertexIndice[i] - 1;
+        glm::vec3 vertex = vertices[vertexIndex];
+        glVertex3f(vertex.x, vertex.y, vertex.z);
+
+    }
+    glEnd();
+}
+
 void SushiBar::initializeGL() {
   initializeOpenGLFunctions();
   glEnable(GL_DEPTH_TEST);
   glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-
-  // Shaders
-  if (!program->addShaderFromSourceFile(QOpenGLShader::Vertex, "C:\\Users\\hanhw\\Desktop\\Computer Graphics\\SushiBar\\shaders\\model.vert")) {
-      std::cout << "Vertex shader compile failed" << std::endl;
-  }
-  if (!program->addShaderFromSourceFile(QOpenGLShader::Fragment, "C:\\Users\\hanhw\\Desktop\\Computer Graphics\\SushiBar\\shaders\\model.frag")) {
-      std::cout << "Fragment shader compile failed" << std::endl;
-  }
-  if (!program->link()) {
-      std::cout << "Linking failed" << std::endl;
-  }
-
-  cat = new Model("C:\\Users\\hanhw\\Desktop\\Computer Graphics\\SushiBar\\models\\cat_body.obj");
 }
 
 void SushiBar::paintGL() {
@@ -76,12 +84,7 @@ void SushiBar::paintGL() {
 //  this->cube();
   this->drawAxis();
 
-  QMatrix4x4 model;
-  model.scale(0.15, 0.15, 0.15);
-  if (!program->bind()) std::cout << "bind failed" << std::endl;
-  program->setUniformValue("model", model);
-  cat->draw(program);
-  program->release();
+  this->drawCat();
   glLoadIdentity();
 
   // Camera properties

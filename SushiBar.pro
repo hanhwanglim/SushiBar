@@ -12,12 +12,10 @@ CONFIG += c++11
 SOURCES += \
     main.cpp \
     sushi_bar.cpp \
-    widget.cpp \
     window.cpp 
 
 HEADERS += \
     sushi_bar.h \
-    widget.h \
     window.h
 
 # Default rules for deployment.

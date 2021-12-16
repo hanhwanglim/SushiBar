@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui opengl
 LIBS     += -lglu32 -lopengl32
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -12,11 +12,15 @@ CONFIG += c++11
 SOURCES += \
     camera.cpp \
     main.cpp \
+    mesh.cpp \
+    model.cpp \
     sushi_bar.cpp \
-    window.cpp 
+    window.cpp
 
 HEADERS += \
     camera.h \
+    mesh.h \
+    model.h \
     sushi_bar.h \
     window.h
 
@@ -24,3 +28,16 @@ HEADERS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+INCLUDEPATH += ./include /opt/local/include
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/lib/ -lassimp-vc142-mt
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/lib/ -lassimp-vc142-mtd
+else:unix: LIBS += -L$$PWD/lib/ -lassimp-vc142-mt
+
+INCLUDEPATH += $$PWD/lib
+DEPENDPATH += $$PWD/lib
+
+DISTFILES += \
+    model.frag \
+    model.vert

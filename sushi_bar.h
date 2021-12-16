@@ -2,12 +2,15 @@
 #define SUSHI_BAR_H
 
 #include "camera.h"
+ #include "model.h"
 
 #include <QMouseEvent>
 #include <QOpenGLWidget>
+#include <QOpenGLFunctions>
+#include <QOpenGLShaderProgram>
 #include <QWidget>
 
-class SushiBar : public QOpenGLWidget {
+class SushiBar : public QOpenGLWidget, protected QOpenGLFunctions {
   Q_OBJECT
  public:
 
@@ -22,6 +25,10 @@ class SushiBar : public QOpenGLWidget {
   
   void cube();
   void drawAxis();
+
+  QOpenGLShaderProgram* program;
+  Model* cat;
+
 
  protected:
 

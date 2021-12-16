@@ -16,6 +16,9 @@ SushiBar::SushiBar(QWidget* parent) : QOpenGLWidget(parent) {
   QTimer* timer = new QTimer(this);
   connect(timer, &QTimer::timeout, this, QOverload<>::of(&SushiBar::update));
   timer->start(100);
+
+  program = new QOpenGLShaderProgram(this);
+  cat = nullptr;
 }
 
 void SushiBar::cube() {
@@ -48,16 +51,37 @@ void SushiBar::drawAxis() {
 }
 
 void SushiBar::initializeGL() {
+  initializeOpenGLFunctions();
   glEnable(GL_DEPTH_TEST);
   glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+
+  // Shaders
+  if (!program->addShaderFromSourceFile(QOpenGLShader::Vertex, "C:\\Users\\hanhw\\Desktop\\Computer Graphics\\SushiBar\\shaders\\model.vert")) {
+      std::cout << "Vertex shader compile failed" << std::endl;
+  }
+  if (!program->addShaderFromSourceFile(QOpenGLShader::Fragment, "C:\\Users\\hanhw\\Desktop\\Computer Graphics\\SushiBar\\shaders\\model.frag")) {
+      std::cout << "Fragment shader compile failed" << std::endl;
+  }
+  if (!program->link()) {
+      std::cout << "Linking failed" << std::endl;
+  }
+
+  cat = new Model("C:\\Users\\hanhw\\Desktop\\Computer Graphics\\SushiBar\\models\\cat_body.obj");
 }
 
 void SushiBar::paintGL() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   glMatrixMode(GL_MODELVIEW);
-  this->cube();
+//  this->cube();
   this->drawAxis();
+
+  QMatrix4x4 model;
+  model.scale(0.15, 0.15, 0.15);
+  if (!program->bind()) std::cout << "bind failed" << std::endl;
+  program->setUniformValue("model", model);
+  cat->draw(program);
+  program->release();
   glLoadIdentity();
 
   // Camera properties

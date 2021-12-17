@@ -28,7 +28,8 @@ class SushiBar : public QOpenGLWidget, protected QOpenGLFunctions {
   void drawCat();
 
   QOpenGLShaderProgram* program;
-  Model* cat;
+  Model* cat_body;
+  Model* cat_hand;
 
 
  protected:

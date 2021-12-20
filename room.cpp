@@ -30,22 +30,36 @@ void Room::table() {
 void Room::seat() {
   Shape s;
     glPushMatrix();
-    glTranslatef(0, 4, 0);
+    glTranslatef(0, 3, 0);
     // Seat
     glColor3f(0.87843137, 0.06666667, 0.37254902);
     s.drawClosedCylinder(1, 0.6);
 
     // Rod
     glColor3f(0.75294118, 0.75294118, 0.75294118);
-    glTranslatef(0, -4, 0);
-    s.drawClosedCylinder(0.2, 4);
+    glTranslatef(0, -3, 0);
+    s.drawClosedCylinder(0.2, 3);
 
     // Base
     s.drawClosedCylinder(0.8, 0.4);
     glPopMatrix();
 }
 
-// void Room::dividor() {}
+void Room::dividor() {
+  const float dividorCoord[4][3] = {
+    {-9, 0.5, 0},{4.5, 0.5, 0},
+    {-9, -1.5, 0},{4.5,-1.5, 0}
+  };
+  glColor3f(0.65882353f, 0.8f, 0.84313725f);  // Frosted glass
+  glNormal3f(0.0f, 0.0f, -1.0f);
+  glBegin(GL_QUADS);
+
+  glVertex3f(dividorCoord[3][0], dividorCoord[3][1], dividorCoord[3][2]);
+  glVertex3f(dividorCoord[2][0], dividorCoord[2][1], dividorCoord[2][2]);
+  glVertex3f(dividorCoord[0][0], dividorCoord[0][1], dividorCoord[0][2]);
+  glVertex3f(dividorCoord[1][0], dividorCoord[1][1], dividorCoord[1][2]);
+  glEnd();
+}
 
 void Room::room() {
 
@@ -121,23 +135,41 @@ void Room::drawSeats() {
 // void Room::drawRoom() {}
 
 void Room::track() {
-  glBegin(GL_QUADS);
-  // Front
-  glColor3f(0.81960784f, 0.87058824f, 0.87058824f);  // Frosted glass
+  const float trackWidth = 14.9f;
+  const float trackHeight = 0.1f;
+  const float trackDepth = 3.0f;
 
-  glNormal3f(0.0f, 0.0f, 1.0f);
-  glVertex3f(-4, 2.2, 0);
-  glVertex3f(3, 2.2, 0);
-  glVertex3f(3, 2, 0);
-  glVertex3f(-4, 2, 0);
+  const float trackCoord[3] = {-1.55f, -1.7f, 0.0f};
 
-  glEnd();
+  Shape s;
+  glColor3f(0.04705882f, 0.03921569f, 0.0f); // Carbon black
+  s.drawCuboid(trackWidth, trackHeight, trackDepth,
+  trackCoord[0], trackCoord[1], trackCoord[2]);
+
+  // Track guard
+  const float guardWidth = 15.0f;
+  const float guardHeight = 0.2f;
+  const float guardDepth = 0.2f;
+  glColor3f(0.67843137f, 0.69803922f, 0.74117647f); // Aluminium
+
+  const float guardCoord1[3] = {-1.5f, -1.7f, 1.5f};
+  const float guardCoord2[3] = {-1.5f, -1.7f, -1.5f};
+  const float guardCoord3[3] = { 5.9f, -1.7f, 0.0f};
+
+
+  s.drawCuboid(guardWidth, guardHeight, guardDepth,
+               guardCoord1[0], guardCoord1[1], guardCoord1[2]);
+  s.drawCuboid(guardWidth, guardHeight, guardDepth,
+               guardCoord2[0], guardCoord2[1], guardCoord2[2]);
+  s.drawCuboid(guardDepth, guardHeight, trackDepth, 
+               guardCoord3[0], guardCoord3[1], guardCoord3[2]);
+
+  dividor();
 }
 
 void Room::drawAll() {
   room();
   table();
-  // track();
-  // seat();
+  track();
   drawSeats();
 }

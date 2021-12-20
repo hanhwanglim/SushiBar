@@ -13,12 +13,16 @@ SOURCES += \
     camera.cpp \
     main.cpp \
     model.cpp \
+    room.cpp \
+    shape.cpp \
     sushi_bar.cpp \
     window.cpp
 
 HEADERS += \
     camera.h \
     model.h \
+    room.h \
+    shape.h \
     sushi_bar.h \
     window.h
 

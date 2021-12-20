@@ -19,12 +19,8 @@ SushiBar::SushiBar(QWidget* parent) : QOpenGLWidget(parent) {
 
   cat_body = new Model("C:\\Users\\hanhw\\Desktop\\Computer Graphics\\SushiBar\\models\\cat_body.obj");
   cat_hand = new Model("C:\\Users\\hanhw\\Desktop\\Computer Graphics\\SushiBar\\models\\cat_hand.obj");
-}
 
-void SushiBar::cube() {
-  glColor3f(1.0f, 0.0f, 0.0f);
-  GLUquadric* quad = gluNewQuadric();
-  gluCylinder(quad, 2, 1, 1, 12, 12);
+  room = new Room();
 }
 
 void SushiBar::drawAxis() {
@@ -104,14 +100,12 @@ void SushiBar::paintGL() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   glMatrixMode(GL_MODELVIEW);
-//  this->cube();
   this->drawAxis();
-
   glPushMatrix();
-//  glScalef(4.0f, 4.0f, 4.0f);
-  this->drawCat();
-
+//  glScalef(2.0,2.0,2.0);
+  room->drawAll();
   glPopMatrix();
+//  this->drawCat();
   glLoadIdentity();
 
   // Camera properties

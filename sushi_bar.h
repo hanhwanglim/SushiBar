@@ -3,6 +3,8 @@
 
 #include "camera.h"
  #include "model.h"
+#include "shape.h"
+#include "room.h"
 
 #include <QMouseEvent>
 #include <QOpenGLWidget>
@@ -30,6 +32,8 @@ class SushiBar : public QOpenGLWidget, protected QOpenGLFunctions {
   QOpenGLShaderProgram* program;
   Model* cat_body;
   Model* cat_hand;
+
+  Room* room;
 
 
  protected:

@@ -2,7 +2,7 @@
 #define SUSHI_BAR_H
 
 #include "camera.h"
-#include "model.h"
+#include "luckycat.h"
 #include "shape.h"
 #include "room.h"
 #include "sushi.h"
@@ -31,11 +31,11 @@ class SushiBar : public QOpenGLWidget, protected QOpenGLFunctions {
   void drawCat();
 
   QOpenGLShaderProgram* program;
-  Model* cat_body;
-  Model* cat_hand;
+  
 
   Room* room;
   Sushi* sushi;
+  LuckyCat* cat;
 
 
  protected:

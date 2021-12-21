@@ -17,11 +17,11 @@ SushiBar::SushiBar(QWidget* parent) : QOpenGLWidget(parent) {
   connect(timer, &QTimer::timeout, this, QOverload<>::of(&SushiBar::update));
   timer->start(100);
 
-  cat_body = new Model("C:\\Users\\hanhw\\Desktop\\Computer Graphics\\SushiBar\\models\\cat_body.obj");
-  cat_hand = new Model("C:\\Users\\hanhw\\Desktop\\Computer Graphics\\SushiBar\\models\\cat_hand.obj");
+  
 
   room = new Room();
   sushi = new Sushi();
+  cat = new LuckyCat();
 }
 
 void SushiBar::drawAxis() {
@@ -47,49 +47,7 @@ void SushiBar::drawAxis() {
   glEnd();
 }
 
-void SushiBar::drawCat() {
-    std::vector<glm::vec3> vertices = cat_body->vertices;
-    std::vector<glm::vec3> normals = cat_body->normals;
-    std::vector<unsigned int> vertexIndice = cat_body->vertexIndices;
-    std::vector<unsigned int> normalIndice = cat_body->normalIndices;
-    std::vector<unsigned int> textureIndice = cat_body->textureIndices;
 
-    glColor3f(0.69411765, 0.59607843, 0.34901961);
-    glBegin(GL_TRIANGLES);
-
-    for (int i = 0; i < vertexIndice.size(); i++) {
-
-        int normalIndex = normalIndice[i] - 1;
-        glm::vec3 normal = normals[normalIndex];
-        glNormal3f(normal.x, normal.y, normal.z);
-
-        int vertexIndex = vertexIndice[i] - 1;
-        glm::vec3 vertex = vertices[vertexIndex];
-        glVertex3f(vertex.x, vertex.y, vertex.z);
-
-    }
-    glEnd();
-
-    vertices = cat_hand->vertices;
-    normals = cat_hand->normals;
-    vertexIndice = cat_hand->vertexIndices;
-    normalIndice = cat_hand->normalIndices;
-    textureIndice = cat_hand->textureIndices;
-
-    glBegin(GL_TRIANGLES);
-
-    for (int i = 0; i < vertexIndice.size(); i++) {
-        int normalIndex = normalIndice[i] - 1;
-        glm::vec3 normal = normals[normalIndex];
-        glNormal3f(normal.x, normal.y, normal.z);
-
-        int vertexIndex = vertexIndice[i] - 1;
-        glm::vec3 vertex = vertices[vertexIndex];
-        glVertex3f(vertex.x, vertex.y, vertex.z);
-
-    }
-    glEnd();
-}
 
 void SushiBar::initializeGL() {
   initializeOpenGLFunctions();
@@ -102,16 +60,16 @@ void SushiBar::paintGL() {
 
   glMatrixMode(GL_MODELVIEW);
   this->drawAxis();
-  glPushMatrix();
-  // glScalef(2.0,2.0,2.0);
-  glPushMatrix();
-  // glScalef(10,10,10);
-  sushi->draw();
-  glPopMatrix();
+  // glPushMatrix();
+  // // glScalef(2.0,2.0,2.0);
+  // glPushMatrix();
+  // // glScalef(10,10,10);
+  // sushi->draw();
+  // glPopMatrix();
   room->drawAll();
-  glPopMatrix();
+  // glPopMatrix();
   //  this->drawCat();
-
+cat->draw();
   glLoadIdentity();
 
   // Camera properties

@@ -73,8 +73,6 @@ void Sushi::updatePosition() {
     position.z = 0 + (0.7 * sin(angle * PI / 180.0f));
 
     angle += 8.0f;
-
-    angle += 1.0f;
   }
   if (section3) {
     position -= glm::vec3(speed, 0, 0);

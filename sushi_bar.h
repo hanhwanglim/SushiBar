@@ -2,9 +2,10 @@
 #define SUSHI_BAR_H
 
 #include "camera.h"
- #include "model.h"
+#include "model.h"
 #include "shape.h"
 #include "room.h"
+#include "sushi.h"
 
 #include <QMouseEvent>
 #include <QOpenGLWidget>
@@ -34,6 +35,7 @@ class SushiBar : public QOpenGLWidget, protected QOpenGLFunctions {
   Model* cat_hand;
 
   Room* room;
+  Sushi* sushi;
 
 
  protected:

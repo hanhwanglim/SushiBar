@@ -15,6 +15,7 @@ SOURCES += \
     model.cpp \
     room.cpp \
     shape.cpp \
+    sushi.cpp \
     sushi_bar.cpp \
     window.cpp
 
@@ -23,6 +24,7 @@ HEADERS += \
     model.h \
     room.h \
     shape.h \
+    sushi.h \
     sushi_bar.h \
     window.h
 

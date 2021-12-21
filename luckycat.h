@@ -5,6 +5,7 @@
 #include <glm/glm.hpp>
 
 #include "model.h"
+#include "material.h"
 
 class LuckyCat : protected QOpenGLFunctions {
  public:
@@ -14,6 +15,8 @@ class LuckyCat : protected QOpenGLFunctions {
  private:
   Model* cat_hand;
   Model* cat_body;
+
+  Material material;
 
   glm::vec3 position;
 

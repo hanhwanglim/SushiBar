@@ -22,6 +22,7 @@ SushiBar::SushiBar(QWidget* parent) : QOpenGLWidget(parent) {
   room = new Room();
   sushi = new Sushi();
   cat = new LuckyCat();
+  lighting = new Lighting();
 }
 
 void SushiBar::drawAxis() {
@@ -59,7 +60,7 @@ void SushiBar::paintGL() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   glMatrixMode(GL_MODELVIEW);
-  this->drawAxis();
+  // this->drawAxis();
   // glPushMatrix();
   // // glScalef(2.0,2.0,2.0);
   // glPushMatrix();
@@ -70,7 +71,9 @@ void SushiBar::paintGL() {
   // glPopMatrix();
   //  this->drawCat();
 cat->draw();
+  lighting->setup();
   glLoadIdentity();
+
 
   // Camera properties
   glm::vec3 cameraPosition = camera->position();
@@ -89,6 +92,8 @@ void SushiBar::resizeGL(int w, int h) {
 
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
+
+  // lighting->setup();
 
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();

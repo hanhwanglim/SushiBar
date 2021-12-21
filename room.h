@@ -3,6 +3,8 @@
 
 #include "shape.h"
 
+#include "material.h"
+
 #include <QOpenGLFunctions>
 
 class Room : protected QOpenGLFunctions {
@@ -30,6 +32,7 @@ class Room : protected QOpenGLFunctions {
   void drawRoom();
 
   void drawAll();
+
 };
 
 #endif  // ROOM_H

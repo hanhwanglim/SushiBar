@@ -11,6 +11,8 @@ CONFIG += c++11
 
 SOURCES += \
     camera.cpp \
+    lighting.cpp \
+    luckycat.cpp \
     main.cpp \
     model.cpp \
     room.cpp \
@@ -21,6 +23,9 @@ SOURCES += \
 
 HEADERS += \
     camera.h \
+    lighting.h \
+    luckycat.h \
+    material.h \
     model.h \
     room.h \
     shape.h \

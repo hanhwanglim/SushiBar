@@ -6,6 +6,7 @@
 #include "shape.h"
 #include "room.h"
 #include "sushi.h"
+#include "lighting.h"
 
 #include <QMouseEvent>
 #include <QOpenGLWidget>
@@ -36,6 +37,7 @@ class SushiBar : public QOpenGLWidget, protected QOpenGLFunctions {
   Room* room;
   Sushi* sushi;
   LuckyCat* cat;
+  Lighting* lighting;
 
 
  protected:

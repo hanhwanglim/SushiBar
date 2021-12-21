@@ -17,6 +17,11 @@ LuckyCat::LuckyCat() {
   this->angle = 0.0f;
 
   section3 = true;
+
+  material = {{0.0f, 0.0f, 0.0f, 1.0f},
+              {0.69411765, 0.59607843, 0.34901961, 1.0f},
+              {0.6f, 0.6f, 0.5f, 1.0f},
+              32.0f};
 }
 
 void LuckyCat::draw() {
@@ -92,7 +97,6 @@ void LuckyCat::checkPosition() {
 }
 
 void LuckyCat::drawCat() {
-
   const float PI = 3.1415;
   float _handAngle = 90.0f * sin(handAngle * PI / 180.0f);
 
@@ -121,6 +125,11 @@ void LuckyCat::drawBody() {
   std::vector<unsigned int> textureIndice = cat_body->textureIndices;
 
   glColor3f(0.69411765, 0.59607843, 0.34901961);
+  glMaterialfv(GL_FRONT, GL_AMBIENT, material.ambient);
+  glMaterialfv(GL_FRONT, GL_DIFFUSE, material.diffuse);
+  glMaterialfv(GL_FRONT, GL_SPECULAR, material.specular);
+  glMaterialf(GL_FRONT, GL_SHININESS, material.shininess);
+
   glBegin(GL_TRIANGLES);
 
   for (int i = 0; i < vertexIndice.size(); i++) {

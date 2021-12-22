@@ -137,7 +137,7 @@ void Room::room() {
   // glVertex3f(roomDimensions[3][0], roomCeil, roomDimensions[3][1]);
 
   // Back
-  glNormal3f(0.0f, 0.0f, -1.0f);
+  glNormal3f(0.0f, 0.0f, 1.0f);
   glVertex3f(roomDimensions[1][0], roomFloor, roomDimensions[1][1]);
   glVertex3f(roomDimensions[0][0], roomFloor, roomDimensions[0][1]);
   glVertex3f(roomDimensions[0][0], roomCeil, roomDimensions[0][1]);
@@ -151,14 +151,14 @@ void Room::room() {
   // glVertex3f(roomDimensions[1][0], roomCeil, roomDimensions[1][1]);
 
   // Left
-  glNormal3f(-1.0f, 0.0f, 0.0f);
+  glNormal3f(1.0f, 0.0f, 0.0f);
   glVertex3f(roomDimensions[2][0], roomFloor, roomDimensions[2][1]);
   glVertex3f(roomDimensions[0][0], roomFloor, roomDimensions[0][1]);
   glVertex3f(roomDimensions[0][0], roomCeil, roomDimensions[0][1]);
   glVertex3f(roomDimensions[2][0], roomCeil, roomDimensions[2][1]);
 
   // Bottom
-  glNormal3f(0.0f, -1.0f, 0.0f);
+  glNormal3f(0.0f, 1.0f, 0.0f);
   glVertex3f(roomDimensions[3][0], roomFloor, roomDimensions[3][1]);
   glVertex3f(roomDimensions[2][0], roomFloor, roomDimensions[2][1]);
   glVertex3f(roomDimensions[0][0], roomFloor, roomDimensions[0][1]);

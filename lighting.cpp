@@ -23,23 +23,9 @@ void Lighting::setup() {
   const float lightDir[3] = {0.0f, -1.0f, 0.0f};
 
   glEnable(GL_LIGHT0);
-  const float lightPos0[4] = {-6.0f, 4.0f, 0.0f, 0.0f};
-  lightModel(lightPos0);
-  glLightfv(GL_LIGHT0, GL_POSITION, lightPos0);
+  // const float lightPos0[4] = {-6.0f, 4.0f, 0.0f, 0.0f};
+  // lightModel(lightPos0);
+  // glLightfv(GL_LIGHT0, GL_POSITION, lightPos0);
   glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 180);
-  glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, lightDir);
-
-  glEnable(GL_LIGHT1);
-  const float lightPos1[4] = {0.0f, 4.0f, 0.0f, 0.0f};
-  lightModel(lightPos1);
-  glLightfv(GL_LIGHT1, GL_POSITION, lightPos1);
-  glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 180);
-  glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, lightDir);
-
-  glEnable(GL_LIGHT2);
-  const float lightPos2[4] = {6.0f, 4.0f, 0.0f, 0.0f};
-  lightModel(lightPos2);
-  glLightfv(GL_LIGHT2, GL_POSITION, lightPos2);
-  glLightf(GL_LIGHT2, GL_SPOT_CUTOFF, 180);
-  glLightfv(GL_LIGHT2, GL_SPOT_DIRECTION, lightDir);
+  // glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, lightDir);
 }

@@ -2,8 +2,6 @@
 
 #include <gl/GLU.h>
 
-#include <iostream>
-
 LuckyCat::LuckyCat() {
   cat_body = new Model(
       "C:\\Users\\hanhw\\Desktop\\Computer "
@@ -27,7 +25,6 @@ LuckyCat::LuckyCat() {
 void LuckyCat::draw() {
   if (section1 || section3) {
     glPushMatrix();
-
     glTranslatef(position.x, position.y, position.z);
     drawCat();
     glPopMatrix();
@@ -47,21 +44,25 @@ void LuckyCat::updatePosition() {
     position += glm::vec3(speed, 0, 0);
   }
   if (section2) {
-    const float PI = 3.1415f;
-    position.x = 4.7 + (0.7 * cos(angle * PI / 180.0f));
-    position.z = 0 + (0.7 * sin(angle * PI / 180.0f));
+    if (speed > 0) {
+      const float PI = 3.1415f;
+      position.x = 4.7 + (radius * cos(angle * PI / 180.0f));
+      position.z = 0 + (radius * sin(angle * PI / 180.0f));
 
-    angle += 8.0f;
+      angle += angularSpeed;
+    }
   }
   if (section3) {
     position -= glm::vec3(speed, 0, 0);
   }
   if (section4) {
-    const float PI = 3.1415f;
-    position.x = -9 + (0.7 * cos(angle * PI / 180.0f));
-    position.z = 0 + (0.7 * sin(angle * PI / 180.0f));
+    if (speed > 0) {
+      const float PI = 3.1415f;
+      position.x = -9 + (radius * cos(angle * PI / 180.0f));
+      position.z = 0 + (radius * sin(angle * PI / 180.0f));
 
-    angle += 8.0f;
+      angle += angularSpeed;
+    }
   }
 
   checkPosition();
@@ -164,4 +165,21 @@ void LuckyCat::drawHand() {
     glVertex3f(vertex.x, vertex.y, vertex.z);
   }
   glEnd();
+}
+
+void LuckyCat::setSpeed(int speed) {
+  this->speed = (float)speed * 0.1f;
+  this->angularSpeed = (float)speed * 8.0f;
+}
+
+void LuckyCat::stopTrack() {
+  if (speed > 0) {
+    oldSpeed = speed;
+    oldAngularSpeed = angularSpeed;
+    speed = 0.0f;
+  }
+  else {
+    speed = oldSpeed;
+    angularSpeed = oldAngularSpeed;
+  }
 }

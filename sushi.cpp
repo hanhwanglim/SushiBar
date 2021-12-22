@@ -32,7 +32,6 @@ Sushi::Sushi(glm::vec3 position) {
 void Sushi::draw() {
   if (section1 || section3) {
     glPushMatrix();
-
     glTranslatef(position.x, position.y, position.z);
     drawSushi();
     glPopMatrix();
@@ -68,21 +67,25 @@ void Sushi::updatePosition() {
     position += glm::vec3(speed, 0, 0);
   }
   if (section2) {
-    const float PI = 3.1415f;
-    position.x = 4.7 + (0.7 * cos(angle * PI / 180.0f));
-    position.z = 0 + (0.7 * sin(angle * PI / 180.0f));
+    if (speed > 0) {
+      const float PI = 3.1415f;
+      position.x = 4.7 + (radius * cos(angle * PI / 180.0f));
+      position.z = 0 + (radius * sin(angle * PI / 180.0f));
 
-    angle += 8.0f;
+      angle += angularSpeed;
+    }
   }
   if (section3) {
     position -= glm::vec3(speed, 0, 0);
   }
   if (section4) {
-    const float PI = 3.1415f;
-    position.x = -9 + (0.7 * cos(angle * PI / 180.0f));
-    position.z = 0 + (0.7 * sin(angle * PI / 180.0f));
+    if (speed > 0) {
+      const float PI = 3.1415f;
+      position.x = -9 + (radius * cos(angle * PI / 180.0f));
+      position.z = 0 + (radius * sin(angle * PI / 180.0f));
 
-    angle += 8.0f;
+      angle += angularSpeed;
+    }
   }
 
   checkPosition();
@@ -96,7 +99,7 @@ void Sushi::checkPosition() {
     }
   }
   if (section2) {
-    if (this->angle >= 90 && this->angle <= 270) {
+    if (this->angle >= 90 && this->angle < 270) {
       section2 = false;
       section3 = true;
     }
@@ -155,4 +158,20 @@ void Sushi::plate() {
   gluDisk(disk, 0, baseRadius, slices, stack);
 
   glPopMatrix();
+}
+
+void Sushi::setSpeed(int speed) {
+  this->speed = (float)speed * 0.1f;
+  this->angularSpeed = (float)speed * 8.0f;
+}
+
+void Sushi::stopTrack() {
+  if (speed > 0) {
+    oldSpeed = speed;
+    oldAngularSpeed = angularSpeed;
+    speed = 0.0f;
+  } else {
+    speed = oldSpeed;
+    angularSpeed = oldAngularSpeed;
+  }
 }

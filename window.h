@@ -1,11 +1,12 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#include "sushi_bar.h"
-
 #include <QBoxLayout>
+#include <QPushButton>
 #include <QSlider>
 #include <QWidget>
+
+#include "sushibar.h"
 
 class Window : public QWidget {
  public:
@@ -15,7 +16,15 @@ class Window : public QWidget {
   SushiBar* sushiBar;
 
   QBoxLayout* windowLayout;
-  QSlider* slider;
+
+  QSlider* trackSpeed;
+  QPushButton* pauseTrack;
+
+ private:
+  bool trackPaused = false;
+
+  void trackSpeedSlider();
+  void pauseTrackButton();
 };
 
 #endif

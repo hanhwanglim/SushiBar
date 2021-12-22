@@ -1,6 +1,15 @@
 #include "room.h"
 
-Room::Room() {}
+Room::Room() {
+  marc = new Picture(
+      "C:\\Users\\hanhw\\Desktop\\Computer "
+      "Graphics\\SushiBar\\textures\\Marc_Dekamps.ppm");
+  markus = new Picture(
+      "C:\\Users\\hanhw\\Desktop\\Computer "
+      "Graphics\\SushiBar\\textures\\markus.ppm");
+
+  globe = new Globe();
+}
 
 void Room::table() {
   const float tableTopWidth = 15.0f;
@@ -70,7 +79,6 @@ void Room::seat() {
   glMaterialfv(GL_FRONT, GL_SPECULAR, material.specular);
   glMaterialf(GL_FRONT, GL_SHININESS, material.shininess);
 
-
   glTranslatef(0, -3, 0);
   s.drawClosedCylinder(0.2, 3);
 
@@ -80,28 +88,20 @@ void Room::seat() {
 }
 
 void Room::dividor() {
-  const float dividorCoord[4][3] = {
-      {-9, 0.5, 0}, {4.5, 0.5, 0}, {-9, -1.5, 0}, {4.5, -1.5, 0}};
   glColor3f(0.65882353f, 0.8f, 0.84313725f);  // Frosted glass
 
   Material material = {{0.19225, 0.19225, 0.19225, 1},
-              {0.65882353f, 0.8f, 0.84313725f, 1},
-              {0.75294118, 0.75294118, 0.75294118, 1},
-              51.2};  // Frosted glass
+                       {0.65882353f, 0.8f, 0.84313725f, 1},
+                       {0.75294118, 0.75294118, 0.75294118, 1},
+                       51.2};  // Frosted glass
 
   glMaterialfv(GL_FRONT, GL_AMBIENT, material.ambient);
   glMaterialfv(GL_FRONT, GL_DIFFUSE, material.diffuse);
   glMaterialfv(GL_FRONT, GL_SPECULAR, material.specular);
   glMaterialf(GL_FRONT, GL_SHININESS, material.shininess);
 
-  glNormal3f(0.0f, 0.0f, -1.0f);
-  glBegin(GL_QUADS);
-
-  glVertex3f(dividorCoord[3][0], dividorCoord[3][1], dividorCoord[3][2]);
-  glVertex3f(dividorCoord[2][0], dividorCoord[2][1], dividorCoord[2][2]);
-  glVertex3f(dividorCoord[0][0], dividorCoord[0][1], dividorCoord[0][2]);
-  glVertex3f(dividorCoord[1][0], dividorCoord[1][1], dividorCoord[1][2]);
-  glEnd();
+  Shape s;
+  s.drawCuboid(13.5, 2, 0.1, -2.25, -0.5, 0);
 }
 
 void Room::room() {
@@ -131,8 +131,8 @@ void Room::room() {
   glBegin(GL_QUADS);
   // Front
   // glNormal3f(0.0f, 0.0f, 1.0f);
-  // glVertex3f(roomDimensions[3][0],      roomFloor, roomDimensions[3][1]);
-  // glVertex3f(roomDimensions[2][0],      roomFloor, roomDimensions[2][1]);
+  // glVertex3f(roomDimensions[3][0], roomFloor, roomDimensions[3][1]);
+  // glVertex3f(roomDimensions[2][0], roomFloor, roomDimensions[2][1]);
   // glVertex3f(roomDimensions[2][0], roomCeil, roomDimensions[2][1]);
   // glVertex3f(roomDimensions[3][0], roomCeil, roomDimensions[3][1]);
 
@@ -145,8 +145,8 @@ void Room::room() {
 
   // Right
   // glNormal3f(1.0f, 0.0f, 0.0f);
-  // glVertex3f(roomDimensions[1][0],    roomFloor, roomDimensions[1][1]);
-  // glVertex3f(roomDimensions[3][0],   roomFloor, roomDimensions[3][1]);
+  // glVertex3f(roomDimensions[1][0], roomFloor, roomDimensions[1][1]);
+  // glVertex3f(roomDimensions[3][0], roomFloor, roomDimensions[3][1]);
   // glVertex3f(roomDimensions[3][0], roomCeil, roomDimensions[3][1]);
   // glVertex3f(roomDimensions[1][0], roomCeil, roomDimensions[1][1]);
 
@@ -246,4 +246,15 @@ void Room::drawAll() {
   table();
   track();
   drawSeats();
+  drawPictures();
+  globe->draw();
+}
+
+void Room::drawPictures() {
+  glPushMatrix();
+  glTranslatef(-2, 0, 0);
+  marc->draw();
+  glTranslatef(4, 0, 0);
+  markus->draw();
+  glPopMatrix();
 }

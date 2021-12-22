@@ -11,26 +11,32 @@ CONFIG += c++11
 
 SOURCES += \
     camera.cpp \
+    globe.cpp \
+    image.cpp \
     lighting.cpp \
     luckycat.cpp \
     main.cpp \
     model.cpp \
+    picture.cpp \
     room.cpp \
     shape.cpp \
     sushi.cpp \
-    sushi_bar.cpp \
+    sushibar.cpp \
     window.cpp
 
 HEADERS += \
     camera.h \
+    globe.h \
+    image.h \
     lighting.h \
     luckycat.h \
     material.h \
     model.h \
+    picture.h \
     room.h \
     shape.h \
     sushi.h \
-    sushi_bar.h \
+    sushibar.h \
     window.h
 
 # Default rules for deployment.

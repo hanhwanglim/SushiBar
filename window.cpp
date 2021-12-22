@@ -6,10 +6,35 @@ Window::Window(QWidget* parent) : QWidget(parent) {
   sushiBar = new SushiBar(this);
   windowLayout->addWidget(sushiBar);
 
-  slider = new QSlider(Qt::Horizontal);
-  windowLayout->addWidget(slider);
+  trackSpeedSlider();
+  pauseTrackButton();
 }
 
-Window::~Window() {
-  delete sushiBar;
+void Window::trackSpeedSlider() {
+  trackSpeed = new QSlider(Qt::Horizontal);
+  trackSpeed->setRange(1, 5);
+  trackSpeed->setSingleStep(1);
+
+  for (Sushi* _sushi : this->sushiBar->sushis) {
+    connect(trackSpeed, SIGNAL(valueChanged(int)), _sushi, SLOT(setSpeed(int)));
+  }
+
+  connect(trackSpeed, SIGNAL(valueChanged(int)), this->sushiBar->cat,
+          SLOT(setSpeed(int)));
+  windowLayout->addWidget(trackSpeed);
 }
+
+void Window::pauseTrackButton() {
+  pauseTrack = new QPushButton("Pause Track");
+
+  for (Sushi* _sushi : this->sushiBar->sushis) {
+    connect(pauseTrack, SIGNAL(pressed()), _sushi, SLOT(stopTrack()));
+  }
+
+  connect(pauseTrack, SIGNAL(pressed()), this->sushiBar->cat,
+          SLOT(stopTrack()));
+
+  windowLayout->addWidget(pauseTrack);
+}
+
+Window::~Window() { delete sushiBar; }

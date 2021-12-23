@@ -76,3 +76,7 @@ Thumbs.db
 # Libraries
 /include
 /lib
+
+# Clion
+.idea
+cmake-build-debug

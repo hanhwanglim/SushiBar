@@ -2,6 +2,16 @@
 
 #include <gl/GLU.h>
 
+/**
+ * @brief Draws a cuboid onto the scene
+ * 
+ * @param width width
+ * @param height height
+ * @param breadth depth
+ * @param centreX centre x
+ * @param centreY centre y
+ * @param centreZ centre z
+ */
 void Shape::drawCuboid(float width, float height, float breadth, float centreX,
                        float centreY, float centreZ) {
   float w = width;
@@ -57,6 +67,12 @@ void Shape::drawCuboid(float width, float height, float breadth, float centreX,
   glEnd();
 }
 
+/**
+ * @brief Draws a closed cylinder
+ * 
+ * @param radius radius
+ * @param height height
+ */
 void Shape::drawClosedCylinder(float radius, float height) {
   // TODO: use gluDisk
   static GLUquadricObj *quad_obj = gluNewQuadric();

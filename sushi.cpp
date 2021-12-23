@@ -29,23 +29,23 @@ Sushi::Sushi(glm::vec3 position) {
   }
 }
 
+/**
+ * @brief Draws a sushi on the scene
+ * 
+ */
 void Sushi::draw() {
-  if (section1 || section3) {
-    glPushMatrix();
-    glTranslatef(position.x, position.y, position.z);
-    drawSushi();
-    glPopMatrix();
-
-  } else if (section2 || section4) {
-    glPushMatrix();
-    glTranslatef(position.x, position.y, position.z);
-    drawSushi();
-    glPopMatrix();
-  }
+  glPushMatrix();
+  glTranslatef(position.x, position.y, position.z);
+  drawSushi();
+  glPopMatrix();
 
   updatePosition();
 }
 
+/**
+ * @brief Draw the 3 sushi on a plate
+ * 
+ */
 void Sushi::drawSushi() {
   glRotatef(-this->angle, 0, 1, 0);
   glPushMatrix();
@@ -62,6 +62,10 @@ void Sushi::drawSushi() {
   glPopMatrix();
 }
 
+/**
+ * @brief Update the position of the sushi in the track
+ * 
+ */
 void Sushi::updatePosition() {
   if (section1) {
     position += glm::vec3(speed, 0, 0);
@@ -91,6 +95,10 @@ void Sushi::updatePosition() {
   checkPosition();
 }
 
+/**
+ * @brief Checks the position of the sushi and updates the sections
+ * 
+ */
 void Sushi::checkPosition() {
   if (section1) {
     if (position.x >= 4.5) {
@@ -120,22 +128,55 @@ void Sushi::checkPosition() {
   if (angle >= 360) angle = 0;
 }
 
+/**
+ * @brief Create sushi object
+ * 
+ */
 void Sushi::sushi() {
   Shape s;
+  Material material;
 
   // Seaweed
   glColor3f(0.37647059, 0.39607843, 0.18039216);
+  material = {{0.37647059, 0.39607843, 0.18039216, 1},
+              {0.37647059, 0.39607843, 0.18039216, 1},
+              {0.37647059, 0.39607843, 0.18039216, 1},
+              25};
+  glMaterialfv(GL_FRONT, GL_AMBIENT, material.ambient);
+  glMaterialfv(GL_FRONT, GL_DIFFUSE, material.diffuse);
+  glMaterialfv(GL_FRONT, GL_SPECULAR, material.specular);
+  glMaterialf(GL_FRONT, GL_SHININESS, material.shininess);
   s.drawClosedCylinder(0.15, 0.15);
 
   // Rice
   glColor3f(0.96470588, 0.97254902, 0.92941176);
+  material = {{0.96470588, 0.97254902, 0.92941176, 1},
+              {0.96470588, 0.97254902, 0.92941176, 1},
+              {0.96470588, 0.97254902, 0.92941176, 1},
+              25};
+  glMaterialfv(GL_FRONT, GL_AMBIENT, material.ambient);
+  glMaterialfv(GL_FRONT, GL_DIFFUSE, material.diffuse);
+  glMaterialfv(GL_FRONT, GL_SPECULAR, material.specular);
+  glMaterialf(GL_FRONT, GL_SHININESS, material.shininess);
   s.drawClosedCylinder(0.14, 0.1501);
 
   // Cucumber
   glColor3f(0.45098039, 0.68627451, 0.34901961);
+  material = {{0.45098039, 0.68627451, 0.34901961, 1},
+              {0.45098039, 0.68627451, 0.34901961, 1},
+              {0.45098039, 0.68627451, 0.34901961, 1},
+              25};
+  glMaterialfv(GL_FRONT, GL_AMBIENT, material.ambient);
+  glMaterialfv(GL_FRONT, GL_DIFFUSE, material.diffuse);
+  glMaterialfv(GL_FRONT, GL_SPECULAR, material.specular);
+  glMaterialf(GL_FRONT, GL_SHININESS, material.shininess);
   s.drawClosedCylinder(0.05, 0.1502);
 }
 
+/**
+ * @brief Draws a plate
+ * 
+ */
 void Sushi::plate() {
   static GLUquadricObj *quad_obj = gluNewQuadric();
   static GLUquadricObj *disk = gluNewQuadric();
@@ -149,6 +190,14 @@ void Sushi::plate() {
   GLdouble stack = 1.0f;
 
   glColor3f(0.96862745, 1.0, 0.92941176);
+  Material material = {{0.96862745, 1.0, 0.92941176, 1},
+              {0.96862745, 1.0, 0.92941176, 1},
+              {0.96862745, 1.0, 0.92941176, 1},
+              25};
+  glMaterialfv(GL_FRONT, GL_AMBIENT, material.ambient);
+  glMaterialfv(GL_FRONT, GL_DIFFUSE, material.diffuse);
+  glMaterialfv(GL_FRONT, GL_SPECULAR, material.specular);
+  glMaterialf(GL_FRONT, GL_SHININESS, material.shininess);
 
   glPushMatrix();
   glRotatef(-90, 1, 0, 0);
@@ -160,11 +209,20 @@ void Sushi::plate() {
   glPopMatrix();
 }
 
+/**
+ * @brief Slot to set the speed of the sushi on the track
+ * 
+ * @param speed speed
+ */
 void Sushi::setSpeed(int speed) {
   this->speed = (float)speed * 0.1f;
   this->angularSpeed = (float)speed * 8.0f;
 }
 
+/**
+ * @brief Slot to stop the sushi on the track
+ * 
+ */
 void Sushi::stopTrack() {
   if (speed > 0) {
     oldSpeed = speed;

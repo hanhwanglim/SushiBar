@@ -71,8 +71,8 @@ void Room::seat() {
 
   material = {{0.19225, 0.19225, 0.19225, 1},
               {0.75294118, 0.75294118, 0.75294118, 1},
-              {0.508273, 0.508273, 0.508273, 1},
-              51.2};  // Silver
+              {1, 1, 1, 1},
+              90.2};  // Silver
 
   glMaterialfv(GL_FRONT, GL_AMBIENT, material.ambient);
   glMaterialfv(GL_FRONT, GL_DIFFUSE, material.diffuse);
@@ -107,10 +107,8 @@ void Room::dividor() {
 void Room::room() {
   const float roomDimensions[4][2] = {
       //  Left (x)  ||   Right (x)
-      {-9.0f, -7.0f},
-      {9.0f, -7.0f},  // Up   (z)
-      {-9.0f, 7.0f},
-      {9.0f, 7.0f}  // Down (z)
+      {-9.0f, -7.0f}, {9.0f, -7.0f},  // Up   (z)
+      {-9.0f, 7.0f}, {9.0f, 7.0f}  // Down (z)
   };
 
   const float roomFloor = -7.0f;
@@ -167,10 +165,6 @@ void Room::room() {
   glEnd();
 }
 
-// void Room::paintings() {}
-
-// void Room::drawTable() {}
-
 void Room::drawSeats() {
   const float y = -7.0f;
 
@@ -183,10 +177,6 @@ void Room::drawSeats() {
     }
   }
 }
-
-// void Room::drawDividor() {}
-
-// void Room::drawRoom() {}
 
 void Room::track() {
   Shape s;
@@ -257,4 +247,10 @@ void Room::drawPictures() {
   glTranslatef(4, 0, 0);
   markus->draw();
   glPopMatrix();
+}
+
+Room::~Room() {
+  delete marc;
+  delete markus;
+  delete globe;
 }

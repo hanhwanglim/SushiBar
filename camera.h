@@ -7,7 +7,8 @@
 
 class Camera {
  public:
-  Camera(glm::vec3 position);
+  Camera();
+  explicit Camera(glm::vec3 position);
 
   /**
    * @brief Returns the position vector

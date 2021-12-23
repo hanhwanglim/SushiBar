@@ -12,7 +12,9 @@
 class Room : protected QOpenGLFunctions {
  public:
   Room();
+  ~Room();
 
+  // Objects
   void table();
   void seat();
   void dividor();
@@ -20,9 +22,8 @@ class Room : protected QOpenGLFunctions {
   void track();
   void pictures();
 
-  void drawTable();
+  // Draw functions
   void drawSeats();
-  void drawDividor();
   void drawRoom();
   void drawGlobe();
   void drawPictures();
@@ -32,7 +33,6 @@ class Room : protected QOpenGLFunctions {
  private:
   Picture* marc;
   Picture* markus;
-
   Globe* globe;
 };
 

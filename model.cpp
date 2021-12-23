@@ -1,5 +1,10 @@
 #include "model.h"
 
+/**
+ * @brief Loads the model
+ * 
+ * @param path 
+ */
 Model::Model(const std::string& path) {
   FILE* file = fopen(path.c_str(), "r");
 

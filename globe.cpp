@@ -1,5 +1,7 @@
 #include "globe.h"
 
+#include <gl/GLU.h>
+
 #include "shape.h"
 
 Globe::Globe() {
@@ -8,6 +10,10 @@ Globe::Globe() {
       "Graphics\\SushiBar\\textures\\Mercator-projection.ppm");
 }
 
+/**
+ * @brief Draw the globe onto the scene
+ * 
+ */
 void Globe::draw() {
   glPushMatrix();
   glTranslatef(4, -1.8, 3);
@@ -19,6 +25,10 @@ void Globe::draw() {
   updateAngle();
 }
 
+/**
+ * @brief Create the globe object
+ * 
+ */
 void Globe::globe() {
   initializeOpenGLFunctions();
 
@@ -35,6 +45,7 @@ void Globe::globe() {
 
   glEnable(GL_TEXTURE_2D);
 
+  // Setup texture
   unsigned int texture;
   glGenTextures(1, &texture);
   glBindTexture(GL_TEXTURE_2D, texture);
@@ -48,6 +59,7 @@ void Globe::globe() {
   glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
   static GLUquadricObj* quad = gluNewQuadric();
+  // Bind texture to object
   glBindTexture(GL_TEXTURE_2D, texture);
   gluQuadricDrawStyle(quad, GLU_FILL);
   gluQuadricTexture(quad, GL_TRUE);
@@ -56,15 +68,24 @@ void Globe::globe() {
   glPushMatrix();
   glRotatef(-90, 1, 0, 0);
   glPushMatrix();
-  glRotatef(angle, 0, 0, 1);
+  glRotatef(angle, 0, 0, 1);  // Perform rotation
   gluSphere(quad, 1.0, 12, 12);
   glPopMatrix();
   glPopMatrix();
 
+  // Unbind texture
   glBindTexture(GL_TEXTURE_2D, 0);
   glDisable(GL_TEXTURE_2D);
 
   glPopMatrix();
 }
 
+/**
+ * @brief Updates the angle of the globe every tick.
+ * 
+ */
 void Globe::updateAngle() { angle += 5.0f; }
+
+Globe::~Globe() {
+  delete _image;
+}

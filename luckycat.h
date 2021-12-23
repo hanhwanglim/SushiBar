@@ -13,6 +13,7 @@ class LuckyCat : public QOpenGLWidget, protected QOpenGLFunctions {
 
  public:
   LuckyCat();
+  ~LuckyCat();
 
   void draw();
 
@@ -30,9 +31,11 @@ class LuckyCat : public QOpenGLWidget, protected QOpenGLFunctions {
   float speed = 0.1;
   float angularSpeed = 8.0f;
   
+  // Saving speeds if the track is paused
   float oldSpeed = 0;
   float oldAngularSpeed = 0;
 
+  // Sections on the track
   bool section1;
   bool section2;
   bool section3;

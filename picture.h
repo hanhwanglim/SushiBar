@@ -14,6 +14,7 @@ class Picture : protected QOpenGLFunctions {
  public:
   Picture();
   Picture(const std::string path);
+  ~Picture();
 
   void picture();
   void draw();

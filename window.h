@@ -21,8 +21,6 @@ class Window : public QWidget {
   QPushButton* pauseTrack;
 
  private:
-  bool trackPaused = false;
-
   void trackSpeedSlider();
   void pauseTrackButton();
 };

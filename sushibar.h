@@ -5,6 +5,7 @@
 #include <QOpenGLFunctions>
 #include <QOpenGLShaderProgram>
 #include <QOpenGLWidget>
+#include <QTimer>
 #include <QWidget>
 
 #include <vector>
@@ -36,18 +37,20 @@ class SushiBar : public QOpenGLWidget, protected QOpenGLFunctions {
   void drawAxis();
   void drawCat();
 
-  QOpenGLShaderProgram* program;
-
   Room* room;
   Sushi* sushi;
   Lighting* lighting;
   Globe* globe;
 
+  QTimer* timer;
+
  protected:
+  // OpenGL functions
   void initializeGL();
   void paintGL();
   void resizeGL(int w, int h);
 
+  // Mouse events
   void mouseMoveEvent(QMouseEvent* event);
   void mousePressEvent(QMouseEvent* event);
   void mouseReleaseEvent(QMouseEvent* event);

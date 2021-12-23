@@ -6,6 +6,8 @@
 
 #include <glm/glm.hpp>
 
+#include "material.h"
+
 class Sushi : public QOpenGLWidget, protected QOpenGLFunctions {
   Q_OBJECT
 
@@ -23,9 +25,11 @@ class Sushi : public QOpenGLWidget, protected QOpenGLFunctions {
   float angularSpeed = 8.0f;
   float radius;
 
+  // Saving speeds if the track is paused
   float oldAngularSpeed = 0;
   float oldSpeed = 0;
 
+  // Track section
   bool section1 = false;
   bool section2 = false;
   bool section3 = false;

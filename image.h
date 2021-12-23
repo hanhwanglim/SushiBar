@@ -13,7 +13,18 @@ class Image {
 
   unsigned char* data() const;
 
+  /**
+   * @brief Returns the width of the image
+   * 
+   * @return unsigned int width
+   */
   unsigned int width() const { return _width; }
+
+  /**
+   * @brief Returns the height of the image
+   * 
+   * @return unsigned int height
+   */
   unsigned int height() const { return _height; }
 
  private:

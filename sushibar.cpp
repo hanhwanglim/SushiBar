@@ -2,7 +2,6 @@
 
 #include <gl/GLU.h>
 
-#include <QTimer>
 #include <glm/gtx/string_cast.hpp>
 #include <iostream>
 
@@ -12,10 +11,11 @@ SushiBar::SushiBar(QWidget* parent) : QOpenGLWidget(parent) {
   this->camera = new Camera(cameraPosition);
 
   // Setup timer
-  QTimer* timer = new QTimer(this);
+  this->timer = new QTimer(this);
   connect(timer, &QTimer::timeout, this, QOverload<>::of(&SushiBar::update));
   timer->start(100);
 
+  // Create objects
   room = new Room();
   cat = new LuckyCat();
   lighting = new Lighting();
@@ -28,6 +28,10 @@ SushiBar::SushiBar(QWidget* parent) : QOpenGLWidget(parent) {
   }
 }
 
+/**
+ * @brief Draws 3D axis to help with modelling
+ * 
+ */
 void SushiBar::drawAxis() {
   GLfloat lineLength = 100.0f;
 
@@ -51,6 +55,10 @@ void SushiBar::drawAxis() {
   glEnd();
 }
 
+/**
+ * @brief Initialise OpenGL
+ * 
+ */
 void SushiBar::initializeGL() {
   initializeOpenGLFunctions();
   glEnable(GL_DEPTH_TEST);
@@ -84,6 +92,12 @@ void SushiBar::paintGL() {
   glFlush();
 }
 
+/**
+ * @brief Called when screen is resized
+ * 
+ * @param w width
+ * @param h height
+ */
 void SushiBar::resizeGL(int w, int h) {
   glViewport(0, 0, w, h);
 
@@ -98,6 +112,11 @@ void SushiBar::resizeGL(int w, int h) {
   glOrtho(-ortho, ortho, -ortho, ortho, -ortho, ortho);
 }
 
+/**
+ * @brief Mouse move event
+ * 
+ * @param event Mouse event
+ */
 void SushiBar::mouseMoveEvent(QMouseEvent* event) {
   if (dragCamera) {
     QPoint newMousePosition = event->pos();
@@ -110,6 +129,11 @@ void SushiBar::mouseMoveEvent(QMouseEvent* event) {
   }
 }
 
+/**
+ * @brief Mouse press event
+ * 
+ * @param event Mouse event
+ */
 void SushiBar::mousePressEvent(QMouseEvent* event) {
   if (event->button() == Qt::MouseButton::LeftButton) {
     dragCamera = true;
@@ -117,6 +141,21 @@ void SushiBar::mousePressEvent(QMouseEvent* event) {
   }
 }
 
+/**
+ * @brief Mouse release event 
+ * 
+ * @param event Mouse event
+ */
 void SushiBar::mouseReleaseEvent(QMouseEvent* event) { dragCamera = false; }
 
-SushiBar::~SushiBar() {}
+SushiBar::~SushiBar() {
+  delete camera;
+  delete timer;
+  delete room;
+  delete cat;
+  delete lighting;
+
+  for (Sushi* sushi : sushis) {
+    delete sushi;
+  }
+}

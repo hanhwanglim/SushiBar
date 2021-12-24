@@ -13,7 +13,7 @@ Window::Window(QWidget* parent) : QWidget(parent) {
 void Window::trackSpeedSlider() {
   trackSpeed = new QSlider(Qt::Horizontal);
 
-  trackSpeed->setRange(1, 5);
+  trackSpeed->setRange(1, 10);
   trackSpeed->setSingleStep(1);
 
   for (Sushi* _sushi : this->sushiBar->sushis)

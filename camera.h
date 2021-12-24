@@ -8,7 +8,7 @@
 class Camera {
  public:
   Camera();
-  explicit Camera(glm::vec3 position);
+  Camera(glm::vec3 position);
 
   /**
    * @brief Returns the position vector
@@ -42,8 +42,8 @@ class Camera {
   glm::vec3 _worldUp;   // World up vector
 
   // Euler angles
-  float _yaw;   // Yaw
-  float _pitch; // Pitch
+  float _yaw;    // Yaw
+  float _pitch;  // Pitch
 
   // Mouse properties
   float _mouseSensitivity;  // Mouse sensitivity

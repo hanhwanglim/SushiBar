@@ -1,6 +1,6 @@
 #include "shape.h"
 
-#include <gl/GLU.h>
+#include <GL/glu.h>
 
 /**
  * @brief Draws a cuboid onto the scene
@@ -74,7 +74,6 @@ void Shape::drawCuboid(float width, float height, float breadth, float centreX,
  * @param height height
  */
 void Shape::drawClosedCylinder(float radius, float height) {
-  // TODO: use gluDisk
   static GLUquadricObj *quad_obj = gluNewQuadric();
   static GLUquadricObj *disk1 = gluNewQuadric();
   static GLUquadricObj *disk2 = gluNewQuadric();

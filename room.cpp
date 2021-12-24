@@ -1,12 +1,8 @@
 #include "room.h"
 
 Room::Room() {
-  marc = new Picture(
-      "C:\\Users\\hanhw\\Desktop\\Computer "
-      "Graphics\\SushiBar\\textures\\Marc_Dekamps.ppm");
-  markus = new Picture(
-      "C:\\Users\\hanhw\\Desktop\\Computer "
-      "Graphics\\SushiBar\\textures\\markus.ppm");
+  marc = new Picture("./textures/Marc_Dekamps.ppm");
+  markus = new Picture("./textures/markus.ppm");
 
   globe = new Globe();
 }
@@ -101,7 +97,7 @@ void Room::dividor() {
   glMaterialf(GL_FRONT, GL_SHININESS, material.shininess);
 
   Shape s;
-  s.drawCuboid(13.5, 2, 0.1, -2.25, -0.5, 0);
+  s.drawCuboid(12, 2, 0.1, -1.5, -0.7, 0);
 }
 
 void Room::room() {

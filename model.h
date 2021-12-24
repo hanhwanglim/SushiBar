@@ -1,3 +1,6 @@
+#ifndef MODEL_H
+#define MODEL_H
+
 #include <fstream>
 #include <iostream>
 #include <glm/glm.hpp>
@@ -16,3 +19,5 @@ class Model {
   std::vector<unsigned int> normalIndices;
   std::vector<unsigned int> textureIndices;
 };
+
+#endif

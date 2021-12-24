@@ -1,18 +1,18 @@
 #include "sushibar.h"
 
-#include <gl/GLU.h>
+#include <GL/glu.h>
 
 #include <glm/gtx/string_cast.hpp>
 #include <iostream>
 
-SushiBar::SushiBar(QWidget* parent) : QOpenGLWidget(parent) {
+SushiBar::SushiBar(QWidget* parent) : QGLWidget(parent) {
   // Setup camera
   glm::vec3 cameraPosition(0.0f, 0.0f, 0.0f);
   this->camera = new Camera(cameraPosition);
 
   // Setup timer
   this->timer = new QTimer(this);
-  connect(timer, &QTimer::timeout, this, QOverload<>::of(&SushiBar::update));
+  connect(timer, SIGNAL(timeout()), this, SLOT(update()));
   timer->start(100);
 
   // Create objects
@@ -20,9 +20,9 @@ SushiBar::SushiBar(QWidget* parent) : QOpenGLWidget(parent) {
   cat = new LuckyCat();
   lighting = new Lighting();
 
-  for (float x = -6; x < 0; x += 4) {
-    for (float z = -0.7; z < 2; z += 1.4) {
-      Sushi* sushi = new Sushi(glm::vec3(x, -1.5, z));
+  for (float x = -6.0f; x < 0.0f; x += 4.0f) {
+    for (float z = -0.7f; z < 2.0f; z += 1.4f) {
+      Sushi* sushi = new Sushi(glm::vec3(x, -1.6, z));
       sushis.push_back(sushi);
     }
   }
@@ -65,6 +65,10 @@ void SushiBar::initializeGL() {
   glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
+/**
+ * @brief Paint GL
+ * 
+ */
 void SushiBar::paintGL() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

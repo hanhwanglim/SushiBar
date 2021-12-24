@@ -1,3 +1,5 @@
+#include <string.h>
+
 #include "model.h"
 
 /**
@@ -8,6 +10,7 @@
 Model::Model(const std::string& path) {
   FILE* file = fopen(path.c_str(), "r");
 
+  // Error handling
   if (file == NULL) {
     std::cout << "Cannot read file" << std::endl;
     return;
@@ -49,6 +52,7 @@ Model::Model(const std::string& path) {
         return;
       }
 
+      // Save vertices
       vertexIndices.push_back(vertexIndex[0]);
       vertexIndices.push_back(vertexIndex[1]);
       vertexIndices.push_back(vertexIndex[2]);

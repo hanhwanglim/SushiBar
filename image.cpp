@@ -4,9 +4,15 @@
 #include <iostream>
 #include <vector>
 
-Image::Image(const std::string& file_name) {
-  image = new QImage(QString(file_name.c_str()));
+/**
+ * @brief Create image
+ * 
+ * @param path file path
+ */
+Image::Image(const std::string& path) {
+  image = new QImage(QString(path.c_str()));
 
+  // Image properties
   _width = image->width();
   _height = image->height();
 

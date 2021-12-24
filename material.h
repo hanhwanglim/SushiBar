@@ -1,7 +1,7 @@
 #ifndef MATERIAL_H
 #define MATERIAL_H
 
-#include <GL/GLU.h>
+#include <GL/glu.h>
 
 struct Material {
   GLfloat ambient[4];

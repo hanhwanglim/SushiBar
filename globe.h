@@ -15,7 +15,7 @@ class Globe : protected QOpenGLFunctions {
 
  private:
   Image* _image;
-  float angle = 0;
+  float _angle = 0;
 
   void updateAngle();
 };

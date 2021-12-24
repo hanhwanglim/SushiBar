@@ -1,18 +1,14 @@
+#include "shape.h"
 #include "sushi.h"
 
-#include <gl/GLU.h>
+Sushi::Sushi()
+{
+    position = glm::vec3(-4, -1.5f, 0.7f);
 
-#include <iostream>
+      this->radius = 0.7f;
+      this->angle = 90.0f;
 
-#include "shape.h"
-
-Sushi::Sushi() {
-  position = glm::vec3(-4, -1.5f, 0.7f);
-
-  this->radius = 0.7f;
-  this->angle = 90.0f;
-
-  section3 = true;
+      section3 = true;
 }
 
 Sushi::Sushi(glm::vec3 position) {
@@ -31,7 +27,7 @@ Sushi::Sushi(glm::vec3 position) {
 
 /**
  * @brief Draws a sushi on the scene
- * 
+ *
  */
 void Sushi::draw() {
   glPushMatrix();
@@ -44,7 +40,7 @@ void Sushi::draw() {
 
 /**
  * @brief Draw the 3 sushi on a plate
- * 
+ *
  */
 void Sushi::drawSushi() {
   glRotatef(-this->angle, 0, 1, 0);
@@ -62,75 +58,10 @@ void Sushi::drawSushi() {
   glPopMatrix();
 }
 
-/**
- * @brief Update the position of the sushi in the track
- * 
- */
-void Sushi::updatePosition() {
-  if (section1) {
-    position += glm::vec3(speed, 0, 0);
-  }
-  if (section2) {
-    if (speed > 0) {
-      const float PI = 3.1415f;
-      position.x = 4.7 + (radius * cos(angle * PI / 180.0f));
-      position.z = 0 + (radius * sin(angle * PI / 180.0f));
-
-      angle += angularSpeed;
-    }
-  }
-  if (section3) {
-    position -= glm::vec3(speed, 0, 0);
-  }
-  if (section4) {
-    if (speed > 0) {
-      const float PI = 3.1415f;
-      position.x = -9 + (radius * cos(angle * PI / 180.0f));
-      position.z = 0 + (radius * sin(angle * PI / 180.0f));
-
-      angle += angularSpeed;
-    }
-  }
-
-  checkPosition();
-}
-
-/**
- * @brief Checks the position of the sushi and updates the sections
- * 
- */
-void Sushi::checkPosition() {
-  if (section1) {
-    if (position.x >= 4.5) {
-      section1 = false;
-      section2 = true;
-    }
-  }
-  if (section2) {
-    if (this->angle >= 90 && this->angle < 270) {
-      section2 = false;
-      section3 = true;
-    }
-  }
-  if (section3) {
-    if (position.x <= -9.0) {
-      section3 = false;
-      section4 = true;
-    }
-  }
-  if (section4) {
-    if (this->angle >= 270.0f) {
-      section4 = false;
-      section1 = true;
-    }
-  }
-
-  if (angle >= 360) angle = 0;
-}
 
 /**
  * @brief Create sushi object
- * 
+ *
  */
 void Sushi::sushi() {
   Shape s;
@@ -175,7 +106,7 @@ void Sushi::sushi() {
 
 /**
  * @brief Draws a plate
- * 
+ *
  */
 void Sushi::plate() {
   static GLUquadricObj *quad_obj = gluNewQuadric();
@@ -201,35 +132,10 @@ void Sushi::plate() {
 
   glPushMatrix();
   glRotatef(-90, 1, 0, 0);
-  // Draw cylinder
+  
+  // Draw plate
   gluCylinder(quad_obj, baseRadius, topRadius, height, slices, stack);
-
   gluDisk(disk, 0, baseRadius, slices, stack);
 
   glPopMatrix();
-}
-
-/**
- * @brief Slot to set the speed of the sushi on the track
- * 
- * @param speed speed
- */
-void Sushi::setSpeed(int speed) {
-  this->speed = (float)speed * 0.1f;
-  this->angularSpeed = (float)speed * 8.0f;
-}
-
-/**
- * @brief Slot to stop the sushi on the track
- * 
- */
-void Sushi::stopTrack() {
-  if (speed > 0) {
-    oldSpeed = speed;
-    oldAngularSpeed = angularSpeed;
-    speed = 0.0f;
-  } else {
-    speed = oldSpeed;
-    angularSpeed = oldAngularSpeed;
-  }
 }

@@ -3,8 +3,7 @@
 
 #include <QMouseEvent>
 #include <QOpenGLFunctions>
-#include <QOpenGLShaderProgram>
-#include <QOpenGLWidget>
+#include <QGLWidget>
 #include <QTimer>
 #include <QWidget>
 
@@ -18,7 +17,7 @@
 #include "shape.h"
 #include "sushi.h"
 
-class SushiBar : public QOpenGLWidget, protected QOpenGLFunctions {
+class SushiBar : public QGLWidget, protected QOpenGLFunctions {
   Q_OBJECT
 
  public:

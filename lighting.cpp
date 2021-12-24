@@ -1,5 +1,6 @@
 #include "lighting.h"
 #include "shape.h"
+
 Lighting::Lighting() {}
 
 /**

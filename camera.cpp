@@ -2,9 +2,9 @@
 
 Camera::Camera() {
   // Camera properties
-  _position = glm::vec3(0.0f, 0.0f, 0.0f);
-  _front = glm::vec3(0.0f, 0.0f, -1.0f);
-  _worldUp = glm::vec3(0.0f, 1.0f, 0.0f);
+  _position = glm::vec3(0.0f,  0.0f,  0.0f);
+  _front    = glm::vec3(0.0f,  0.0f, -1.0f);
+  _worldUp  = glm::vec3(0.0f,  1.0f,  0.0f);
 
   // Euler angles
   _yaw = -90.0f;
@@ -19,8 +19,8 @@ Camera::Camera() {
 Camera::Camera(glm::vec3 position) {
   // Camera properties
   _position = position;
-  _front = glm::vec3(0.0f, 0.0f, -1.0f);
-  _worldUp = glm::vec3(0.0f, 1.0f, 0.0f);
+  _front   = glm::vec3(0.0f, 0.0f, -1.0f);
+  _worldUp = glm::vec3(0.0f, 1.0f,  0.0f);
 
   // Euler angles
   _yaw = -90.0f;

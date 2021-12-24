@@ -4,7 +4,7 @@
 
 #include <QOpenGLFunctions>
 
-#include <gl/GLU.h>
+#include <GL/glu.h>
 
 #include <string>
 

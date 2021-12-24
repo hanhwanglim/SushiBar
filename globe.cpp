@@ -1,15 +1,12 @@
 #include "globe.h"
 #include "shape.h"
 
-#include <gl/GLU.h>
+#include <GL/glu.h>
 
-#include <filesystem>
 #include <iostream>
 
 Globe::Globe() {
-  _image = new Image(
-      "C:\\Users\\hanhw\\Desktop\\Computer "
-      "Graphics\\SushiBar\\textures\\Mercator-projection.ppm");
+  _image = new Image("./textures/Mercator-projection.ppm");
 }
 
 /**
@@ -19,9 +16,7 @@ Globe::Globe() {
 void Globe::draw() {
   glPushMatrix();
   glTranslatef(4, -1.8, 3);
-  glPushMatrix();
   globe();
-  glPopMatrix();
   glPopMatrix();
 
   updateAngle();
@@ -70,7 +65,7 @@ void Globe::globe() {
   glPushMatrix();
   glRotatef(-90, 1, 0, 0);
   glPushMatrix();
-  glRotatef(angle, 0, 0, 1);  // Perform rotation
+  glRotatef(_angle, 0, 0, 1);  // Perform rotation
   gluSphere(quad, 1.0, 12, 12);
   glPopMatrix();
   glPopMatrix();
@@ -86,6 +81,6 @@ void Globe::globe() {
  * @brief Updates the angle of the globe every tick.
  *
  */
-void Globe::updateAngle() { angle += 5.0f; }
+void Globe::updateAngle() { _angle += 5.0f; }
 
 Globe::~Globe() { delete _image; }

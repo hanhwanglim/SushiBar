@@ -7,7 +7,7 @@
 *.core
 *.moc
 *.o
-*.obj
+# *.obj
 *.orig
 *.rej
 *.so
@@ -74,7 +74,7 @@ Thumbs.db
 *.vscode
 
 # Libraries
-/include
+# /include
 /lib
 
 # Clion

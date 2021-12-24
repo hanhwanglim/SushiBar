@@ -1,8 +1,10 @@
 #include "globe.h"
+#include "shape.h"
 
 #include <gl/GLU.h>
 
-#include "shape.h"
+#include <filesystem>
+#include <iostream>
 
 Globe::Globe() {
   _image = new Image(
@@ -12,7 +14,7 @@ Globe::Globe() {
 
 /**
  * @brief Draw the globe onto the scene
- * 
+ *
  */
 void Globe::draw() {
   glPushMatrix();
@@ -27,7 +29,7 @@ void Globe::draw() {
 
 /**
  * @brief Create the globe object
- * 
+ *
  */
 void Globe::globe() {
   initializeOpenGLFunctions();
@@ -82,10 +84,8 @@ void Globe::globe() {
 
 /**
  * @brief Updates the angle of the globe every tick.
- * 
+ *
  */
 void Globe::updateAngle() { angle += 5.0f; }
 
-Globe::~Globe() {
-  delete _image;
-}
+Globe::~Globe() { delete _image; }

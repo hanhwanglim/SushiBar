@@ -1,9 +1,9 @@
 #ifndef SUSHI_BAR_H
 #define SUSHI_BAR_H
 
+#include <QGLWidget>
 #include <QMouseEvent>
 #include <QOpenGLFunctions>
-#include <QGLWidget>
 #include <QTimer>
 #include <QWidget>
 
@@ -28,20 +28,23 @@ class SushiBar : public QGLWidget, protected QOpenGLFunctions {
   LuckyCat* cat;
 
  private:
+  // Camera settings
+
   Camera* camera;
   QPoint mousePosition;
   bool dragCamera = false;
 
-  void cube();
-  void drawAxis();
-  void drawCat();
+  // Objects
 
   Room* room;
   Sushi* sushi;
   Lighting* lighting;
   Globe* globe;
 
+  // Timer
   QTimer* timer;
+
+  void drawAxis();
 
  protected:
   // OpenGL functions

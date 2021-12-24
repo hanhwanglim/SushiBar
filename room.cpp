@@ -49,7 +49,7 @@ void Room::seat() {
   glPushMatrix();
   glTranslatef(0, 3, 0);
   // Seat
-  glColor3f(0.87843137, 0.06666667, 0.37254902);
+  glColor3f(0.87843137, 0.06666667, 0.37254902);  // Metallic
 
   material = {{0.0, 0.0, 0.0, 1},
               {0.87843137, 0.06666667, 0.37254902, 1},
@@ -68,7 +68,7 @@ void Room::seat() {
   material = {{0.19225, 0.19225, 0.19225, 1},
               {0.75294118, 0.75294118, 0.75294118, 1},
               {1, 1, 1, 1},
-              90.2};  // Silver
+              90.2};
 
   glMaterialfv(GL_FRONT, GL_AMBIENT, material.ambient);
   glMaterialfv(GL_FRONT, GL_DIFFUSE, material.diffuse);
@@ -89,7 +89,7 @@ void Room::dividor() {
   Material material = {{0.19225, 0.19225, 0.19225, 1},
                        {0.65882353f, 0.8f, 0.84313725f, 1},
                        {0.75294118, 0.75294118, 0.75294118, 1},
-                       51.2};  // Frosted glass
+                       51.2};
 
   glMaterialfv(GL_FRONT, GL_AMBIENT, material.ambient);
   glMaterialfv(GL_FRONT, GL_DIFFUSE, material.diffuse);
@@ -112,7 +112,7 @@ void Room::room() {
 
   glColor3f(0.96078431f, 0.96078431f, 0.8627451f);  // Beige
 
-  Material material = {{0.329412, 0.223529, 0.027451, 1},  // Brass
+  Material material = {{0.329412, 0.223529, 0.027451, 1},
                        {0.96078431f, 0.96078431f, 0.8627451f, 1},
                        {0.992157, 0.941176, 0.807843, 1},
                        27.897436};

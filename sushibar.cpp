@@ -2,26 +2,28 @@
 
 #include <GL/glu.h>
 
-#include <glm/gtx/string_cast.hpp>
-#include <iostream>
-
 SushiBar::SushiBar(QWidget* parent) : QGLWidget(parent) {
   // Setup camera
   glm::vec3 cameraPosition(0.0f, 0.0f, 0.0f);
-  this->camera = new Camera(cameraPosition);
+  camera = new Camera(cameraPosition);
 
   // Setup timer
-  this->timer = new QTimer(this);
+  timer = new QTimer(this);
   connect(timer, SIGNAL(timeout()), this, SLOT(update()));
-  timer->start(100);
+  const int tickRate = 100;
+  timer->start(tickRate);
 
   // Create objects
   room = new Room();
   cat = new LuckyCat();
   lighting = new Lighting();
 
-  for (float x = -6.0f; x < 0.0f; x += 4.0f) {
-    for (float z = -0.7f; z < 2.0f; z += 1.4f) {
+  // Setting up sushi positions
+  float sushiPosition[] = {-6.0f, -0.7f};
+  float sushiEndPos[] = {0.0f, 2.0f};
+  float sushiGap[] = {4.0f, 1.4f};
+  for (float x = sushiPosition[0]; x < sushiEndPos[0]; x += sushiGap[0]) {
+    for (float z = sushiPosition[1]; z < sushiEndPos[1]; z += sushiGap[1]) {
       Sushi* sushi = new Sushi(glm::vec3(x, -1.6, z));
       sushis.push_back(sushi);
     }
@@ -30,7 +32,7 @@ SushiBar::SushiBar(QWidget* parent) : QGLWidget(parent) {
 
 /**
  * @brief Draws 3D axis to help with modelling
- * 
+ *
  */
 void SushiBar::drawAxis() {
   GLfloat lineLength = 100.0f;
@@ -57,7 +59,7 @@ void SushiBar::drawAxis() {
 
 /**
  * @brief Initialise OpenGL
- * 
+ *
  */
 void SushiBar::initializeGL() {
   initializeOpenGLFunctions();
@@ -67,16 +69,17 @@ void SushiBar::initializeGL() {
 
 /**
  * @brief Paint GL
- * 
+ *
  */
 void SushiBar::paintGL() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   glMatrixMode(GL_MODELVIEW);
 
-  // this->drawAxis();
+  // Draw scene
   glPushMatrix();
-  glScalef(1.5, 1.5, 1.5);
+  const float scale = 1.5f;
+  glScalef(scale, scale, scale);
   for (Sushi* _sushi : sushis) _sushi->draw();
   room->drawAll();
   cat->draw();
@@ -87,7 +90,7 @@ void SushiBar::paintGL() {
   // Camera properties
   glm::vec3 cameraPosition = camera->position();
   glm::vec3 cameraTarget = camera->target();
-  glm::vec3 cameraUp(0, 1, 0);
+  const glm::vec3 cameraUp(0, 1, 0);
 
   gluLookAt(cameraPosition.x, cameraPosition.y, cameraPosition.z,
             cameraTarget.x, cameraTarget.y, cameraTarget.z, cameraUp.x,
@@ -98,7 +101,7 @@ void SushiBar::paintGL() {
 
 /**
  * @brief Called when screen is resized
- * 
+ *
  * @param w width
  * @param h height
  */
@@ -112,17 +115,18 @@ void SushiBar::resizeGL(int w, int h) {
 
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  float ortho = 20.0f;
+  const float ortho = 20.0f;
   glOrtho(-ortho, ortho, -ortho, ortho, -ortho, ortho);
 }
 
 /**
  * @brief Mouse move event
- * 
+ *
  * @param event Mouse event
  */
 void SushiBar::mouseMoveEvent(QMouseEvent* event) {
   if (dragCamera) {
+    // Update mouse position
     QPoint newMousePosition = event->pos();
     float dx = newMousePosition.x() - mousePosition.x();
     float dy = mousePosition.y() - newMousePosition.y();
@@ -135,7 +139,7 @@ void SushiBar::mouseMoveEvent(QMouseEvent* event) {
 
 /**
  * @brief Mouse press event
- * 
+ *
  * @param event Mouse event
  */
 void SushiBar::mousePressEvent(QMouseEvent* event) {
@@ -146,8 +150,8 @@ void SushiBar::mousePressEvent(QMouseEvent* event) {
 }
 
 /**
- * @brief Mouse release event 
- * 
+ * @brief Mouse release event
+ *
  * @param event Mouse event
  */
 void SushiBar::mouseReleaseEvent(QMouseEvent* event) { dragCamera = false; }
@@ -159,7 +163,5 @@ SushiBar::~SushiBar() {
   delete cat;
   delete lighting;
 
-  for (Sushi* sushi : sushis) {
-    delete sushi;
-  }
+  for (Sushi* sushi : sushis) delete sushi;
 }

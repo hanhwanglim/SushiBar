@@ -1,20 +1,20 @@
-#include "shape.h"
 #include "sushi.h"
 
-Sushi::Sushi()
-{
-    position = glm::vec3(-4, -1.5f, 0.7f);
+#include "shape.h"
 
-      this->radius = 0.7f;
-      this->angle = 90.0f;
+Sushi::Sushi() {
+  position = glm::vec3(-4.0f, -1.5f, 0.7f);
 
-      section3 = true;
+  this->radius = 0.7f;
+  this->angle = 90.0f;
+
+  section3 = true;
 }
 
 Sushi::Sushi(glm::vec3 position) {
   this->position = position;
 
-  if (position.z < 0) {
+  if (position.z < 0.0f) {
     section1 = true;
     this->angle = 270.0f;
     this->radius = 0.7f;
@@ -43,21 +43,23 @@ void Sushi::draw() {
  *
  */
 void Sushi::drawSushi() {
-  glRotatef(-this->angle, 0, 1, 0);
+  glRotatef(-this->angle, 0.0f, 1.0f, 0.0f);
+
   glPushMatrix();
+
   plate();
+  // Draw 3 individual sushi on the plate
   for (int i = 0; i < 3; i++) {
     float _angle = i * 120.0f;
     glPushMatrix();
-    glRotatef(_angle, 0, 1, 0);
-    glTranslatef(0.17, 0, 0);
+    glRotatef(_angle, 0.0f, 1.0f, 0.0f);
+    glTranslatef(0.17f, 0.0f, 0.0f);
     sushi();
     glPopMatrix();
   }
 
   glPopMatrix();
 }
-
 
 /**
  * @brief Create sushi object
@@ -68,40 +70,40 @@ void Sushi::sushi() {
   Material material;
 
   // Seaweed
-  glColor3f(0.37647059, 0.39607843, 0.18039216);
-  material = {{0.37647059, 0.39607843, 0.18039216, 1},
-              {0.37647059, 0.39607843, 0.18039216, 1},
-              {0.37647059, 0.39607843, 0.18039216, 1},
-              25};
+  glColor3f(0.376470f, 0.396078f, 0.180392f);
+  material = {{0.317894f, 0.312565f, 0.175841f, 1},
+              {0.376470f, 0.396078f, 0.180392f, 1},
+              {0.376470f, 0.396078f, 0.180392f, 1},
+              25.2199f};
   glMaterialfv(GL_FRONT, GL_AMBIENT, material.ambient);
   glMaterialfv(GL_FRONT, GL_DIFFUSE, material.diffuse);
   glMaterialfv(GL_FRONT, GL_SPECULAR, material.specular);
   glMaterialf(GL_FRONT, GL_SHININESS, material.shininess);
-  s.drawClosedCylinder(0.15, 0.15);
+  s.drawClosedCylinder(0.15f, 0.15f);
 
   // Rice
-  glColor3f(0.96470588, 0.97254902, 0.92941176);
-  material = {{0.96470588, 0.97254902, 0.92941176, 1},
-              {0.96470588, 0.97254902, 0.92941176, 1},
-              {0.96470588, 0.97254902, 0.92941176, 1},
-              25};
+  glColor3f(0.964705f, 0.972549f, 0.929411f);
+  material = {{0.951280f, 0.051287f, 0.918591f, 1},
+              {0.964705f, 0.972549f, 0.929411f, 1},
+              {0.964705f, 0.972549f, 0.929411f, 1},
+              25.1228f};
   glMaterialfv(GL_FRONT, GL_AMBIENT, material.ambient);
   glMaterialfv(GL_FRONT, GL_DIFFUSE, material.diffuse);
   glMaterialfv(GL_FRONT, GL_SPECULAR, material.specular);
   glMaterialf(GL_FRONT, GL_SHININESS, material.shininess);
-  s.drawClosedCylinder(0.14, 0.1501);
+  s.drawClosedCylinder(0.14f, 0.1501f);
 
   // Cucumber
-  glColor3f(0.45098039, 0.68627451, 0.34901961);
-  material = {{0.45098039, 0.68627451, 0.34901961, 1},
-              {0.45098039, 0.68627451, 0.34901961, 1},
-              {0.45098039, 0.68627451, 0.34901961, 1},
-              25};
+  glColor3f(0.450980f, 0.686274f, 0.349019f);
+  material = {{0.450980f, 0.686274f, 0.349019f, 1.0f},
+              {0.450980f, 0.686274f, 0.349019f, 1.0f},
+              {0.450980f, 0.686274f, 0.349019f, 1.0f},
+              25.9125f};
   glMaterialfv(GL_FRONT, GL_AMBIENT, material.ambient);
   glMaterialfv(GL_FRONT, GL_DIFFUSE, material.diffuse);
   glMaterialfv(GL_FRONT, GL_SPECULAR, material.specular);
   glMaterialf(GL_FRONT, GL_SHININESS, material.shininess);
-  s.drawClosedCylinder(0.05, 0.1502);
+  s.drawClosedCylinder(0.05f, 0.1502f);
 }
 
 /**
@@ -120,22 +122,22 @@ void Sushi::plate() {
   GLdouble slices = 12.0f;
   GLdouble stack = 1.0f;
 
-  glColor3f(0.96862745, 1.0, 0.92941176);
-  Material material = {{0.96862745, 1.0, 0.92941176, 1},
-              {0.96862745, 1.0, 0.92941176, 1},
-              {0.96862745, 1.0, 0.92941176, 1},
-              25};
+  glColor3f(0.968627f, 1.0f, 0.929411f);
+  Material material = {{0.968627f, 1.0f, 0.929411f, 1.0f},
+                       {0.968627f, 1.0f, 0.929411f, 1.0f},
+                       {0.968627f, 1.0f, 0.929411f, 1.0f},
+                       25.1232f};
   glMaterialfv(GL_FRONT, GL_AMBIENT, material.ambient);
   glMaterialfv(GL_FRONT, GL_DIFFUSE, material.diffuse);
   glMaterialfv(GL_FRONT, GL_SPECULAR, material.specular);
   glMaterialf(GL_FRONT, GL_SHININESS, material.shininess);
 
   glPushMatrix();
-  glRotatef(-90, 1, 0, 0);
-  
+  glRotatef(-90.0f, 1.0f, 0.0f, 0.0f);
+
   // Draw plate
   gluCylinder(quad_obj, baseRadius, topRadius, height, slices, stack);
-  gluDisk(disk, 0, baseRadius, slices, stack);
+  gluDisk(disk, 0.0, baseRadius, slices, stack);
 
   glPopMatrix();
 }

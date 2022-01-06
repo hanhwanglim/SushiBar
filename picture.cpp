@@ -1,16 +1,17 @@
 #include "picture.h"
 
-Picture::Picture() {}
-
+/**
+ * @brief Construct a new Picture:: Picture object
+ * 
+ * @param path 
+ */
 Picture::Picture(const std::string path) { image = new Image(path); }
 
 /**
- * @brief Loads the picture image
+ * @brief Binds the image onto a surface
  * 
  */
 void Picture::picture() {
-  initializeOpenGLFunctions();
-
   glEnable(GL_TEXTURE_2D);
 
   glGenTextures(1, &texture);
@@ -19,7 +20,6 @@ void Picture::picture() {
   // Load texture
   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image->width(), image->height(), 0,
                GL_RGB, GL_UNSIGNED_BYTE, image->data());
-  glGenerateMipmap(GL_TEXTURE_2D);
 
   // Texture settings
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -29,23 +29,14 @@ void Picture::picture() {
 
   glBindTexture(GL_TEXTURE_2D, texture);
 
-  // Frame
+  // Frame 
 
-  glNormal3f(0, 0, 1);
-  glBegin(GL_POLYGON);
-
-  glTexCoord2f(1, 0);
-  glVertex3f(1, -1, 0);
-
-  glTexCoord2f(0, 0);
-  glVertex3f(-1, -1, 0);
-
-  glTexCoord2f(0, 1);
-  glVertex3f(-1, 1, 0);
-
-  glTexCoord2f(1, 1);
-  glVertex3f(1, 1, 0);
-
+  glBegin(GL_QUADS);
+  glNormal3f(0.0f, 0.0f, 1.0f); 
+  glTexCoord2f(1.0f, 0.0f);  glVertex3f( 1.0f, -1.0f, 0.0f); 
+  glTexCoord2f(0.0f, 0.0f);  glVertex3f(-1.0f, -1.0f, 0.0f); 
+  glTexCoord2f(0.0f, 1.0f);  glVertex3f(-1.0f,  1.0f, 0.0f); 
+  glTexCoord2f(1.0f, 1.0f);  glVertex3f( 1.0f,  1.0f, 0.0f);
   glEnd();
 
   // Unbind texture
@@ -55,15 +46,8 @@ void Picture::picture() {
 
 /**
  * @brief Draws picture on scene
- * 
+ *
  */
-void Picture::draw() {
-  glPushMatrix();
-  glTranslatef(0, 1, -6.9);
-  picture();
-  glPopMatrix();
-}
+void Picture::draw() { picture(); }
 
-Picture::~Picture() {
-  delete image;
-}
+Picture::~Picture() { delete image; }

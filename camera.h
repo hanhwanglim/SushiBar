@@ -1,3 +1,10 @@
+/*
+ * Code was sourced and modified from LearnOpenGL
+ * 
+ * https://learnopengl.com/code_viewer_gh.php?code=src/1.getting_started/7.4.camera_class/camera_class.cpp
+ * 
+ */
+
 #ifndef CAMERA_H
 #define CAMERA_H
 
@@ -42,8 +49,8 @@ class Camera {
   glm::vec3 _worldUp;   // World up vector
 
   // Euler angles
-  float _yaw;    // Yaw
-  float _pitch;  // Pitch
+  float _yaw;   // Yaw
+  float _pitch; // Pitch
 
   // Mouse properties
   float _mouseSensitivity;  // Mouse sensitivity

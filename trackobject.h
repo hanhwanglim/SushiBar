@@ -1,14 +1,15 @@
 #ifndef TRACK_OBJECT_H
 #define TRACK_OBJECT_H
 
-#include <QOpenGLFunctions>
-#include <QGLWidget>
-#include <glm/glm.hpp>
-
-#include "model.h"
 #include "material.h"
+#include "model.h"
 
-class TrackObject : public QGLWidget, protected QOpenGLFunctions {
+#include <glm/glm.hpp>
+#include <glm/gtc/constants.hpp>
+
+#include <QGLWidget>
+
+class TrackObject : public QGLWidget {
   Q_OBJECT
 
  public:
@@ -18,29 +19,40 @@ class TrackObject : public QGLWidget, protected QOpenGLFunctions {
   void draw();
 
  protected:
-  glm::vec3 position;
+  glm::vec3 _position;
 
-  float angle;
-  float radius;
-  float speed = 0.1;
-  float angularSpeed = 8.0f;
+  float _angle;
+  float _radius;
+  float _speed;
+  float _angularSpeed;
 
-  // Saving speeds if the track is paused
-  float oldSpeed = 0;
-  float oldAngularSpeed = 0;
+  // Saving previous speeds if the track is paused
+  float _oldSpeed;
+  float _oldAngularSpeed;
 
   // Sections on the track
-  bool section1;
-  bool section2;
-  bool section3;
-  bool section4;
+  bool _section1;
+  bool _section2;
+  bool _section3;
+  bool _section4;
+
+  void section1();
+  void section2();
+  void section3();
+  void section4();
+
+  void checkSection1();
+  void checkSection2();
+  void checkSection3();
+  void checkSection4();
 
   void updatePosition();
   void checkPosition();
+  void resetAngle();
 
  public slots:
   void setSpeed(int speed);
   void stopTrack();
 };
 
-#endif  // TRACK_OBJECT_H
+#endif

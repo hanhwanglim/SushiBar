@@ -4,93 +4,109 @@
 
 /**
  * @brief Draws a cuboid onto the scene
- * 
- * @param width width
- * @param height height
- * @param breadth depth
- * @param centreX centre x
- * @param centreY centre y
- * @param centreZ centre z
+ *
+ * @param w width
+ * @param h height
+ * @param d depth
+ * @param x centre x
+ * @param y centre y
+ * @param z centre z
  */
-void Shape::drawCuboid(float width, float height, float breadth, float centreX,
-                       float centreY, float centreZ) {
-  float w = width;
-  float h = height;
-  float b = breadth;
+void Shape::drawCuboid(float w, float h, float d, float x, float y, float z) {
+  // Centralise coordinates
+  x = x - (w / 2.0f);
+  y = y - (h / 2.0f);
+  z = z - (d / 2.0f);
 
-  float x = centreX - (w / 2.0);
-  float y = centreY - (h / 2.0);
-  float z = centreZ - (b / 2.0);
-
-  glBegin(GL_QUADS);
-  // Front
-  glNormal3f(0.0f, 0.0f, 1.0f);
-  glVertex3f(x + w, y, z + b);
-  glVertex3f(x + w, y + h, z + b);
-  glVertex3f(x, y + h, z + b);
-  glVertex3f(x, y, z + b);
-
-  // Back
-  glNormal3f(0.0f, 0.0f, -1.0f);
-  glVertex3f(x + w, y, z);
-  glVertex3f(x + w, y + h, z);
-  glVertex3f(x, y + h, z);
-  glVertex3f(x, y, z);
+  GLfloat normals[6][3] = {{ 1.0f,  0.0f,  0.0f},    // Right
+                           {-1.0f,  0.0f,  0.0f},   // Left
+                           { 0.0f,  0.0f,  1.0f},    // Front
+                           { 0.0f,  0.0f, -1.0f},   // Back
+                           { 0.0f,  1.0f,  0.0f},    // Top
+                           { 0.0f, -1.0f,  0.0f}};  // Bottom
 
   // Right
-  glNormal3f(1.0f, 0.0f, 0.0f);
-  glVertex3f(x + w, y, z);
-  glVertex3f(x + w, y + h, z);
-  glVertex3f(x + w, y + h, z + b);
-  glVertex3f(x + w, y, z + b);
+  glNormal3fv(normals[0]);
+  glBegin(GL_POLYGON);
+  glVertex3f(x + w, y + 0, z + d);
+  glVertex3f(x + w, y + 0, z + 0);
+  glVertex3f(x + w, y + h, z + 0);
+  glVertex3f(x + w, y + h, z + d);
+  glEnd();
+
+  // Back
+  glNormal3fv(normals[3]);
+  glBegin(GL_POLYGON);
+  glVertex3f(x + 0, y + 0, z + 0);
+  glVertex3f(x + w, y + 0, z + 0);
+  glVertex3f(x + w, y + h, z + 0);
+  glVertex3f(x + 0, y + h, z + 0);
+  glEnd();
+
+  // Front
+  glNormal3fv(normals[2]);
+  glBegin(GL_POLYGON);
+  glVertex3f(x + 0, y + 0, z + d);
+  glVertex3f(x + w, y + 0, z + d);
+  glVertex3f(x + w, y + h, z + d);
+  glVertex3f(x + 0, y + h, z + d);
+  glEnd();
 
   // Left
-  glNormal3f(-1.0f, 0.0f, 0.0f);
-  glVertex3f(x, y, z);
-  glVertex3f(x, y + h, z);
-  glVertex3f(x, y + h, z + b);
-  glVertex3f(x, y, z + b);
-
-  // Bottom
-  glNormal3f(0.0f, -1.0f, 0.0f);
-  glVertex3f(x + w, y, z);
-  glVertex3f(x, y, z);
-  glVertex3f(x, y, z + b);
-  glVertex3f(x + w, y, z + b);
+  glNormal3fv(normals[1]);
+  glBegin(GL_POLYGON);
+  glVertex3f(x + 0, y + 0, z + d);
+  glVertex3f(x + 0, y + 0, z + 0);
+  glVertex3f(x + 0, y + h, z + 0);
+  glVertex3f(x + 0, y + h, z + d);
+  glEnd();
 
   // Top
-  glNormal3f(0.0f, 1.0f, 0.0f);
-  glVertex3f(x + w, y + h, z);
-  glVertex3f(x, y + h, z);
-  glVertex3f(x, y + h, z + b);
-  glVertex3f(x + w, y + h, z + b);
+  glNormal3fv(normals[4]);
+  glBegin(GL_POLYGON);
+  glVertex3f(x + w, y + h, z + d);
+  glVertex3f(x + w, y + h, z + 0);
+  glVertex3f(x + 0, y + h, z + 0);
+  glVertex3f(x + 0, y + h, z + d);
+  glEnd();
+
+  // Bottom
+  glNormal3fv(normals[5]);
+  glBegin(GL_POLYGON);
+  glVertex3f(x + w, y + 0, z + d);
+  glVertex3f(x + w, y + 0, z + 0);
+  glVertex3f(x + 0, y + 0, z + 0);
+  glVertex3f(x + 0, y + 0, z + d);
   glEnd();
 }
 
 /**
  * @brief Draws a closed cylinder
- * 
+ *
  * @param radius radius
  * @param height height
  */
 void Shape::drawClosedCylinder(float radius, float height) {
-  static GLUquadricObj *quad_obj = gluNewQuadric();
-  static GLUquadricObj *disk1 = gluNewQuadric();
-  static GLUquadricObj *disk2 = gluNewQuadric();
-  
+  float y = height / 2.0f;  // Centre coordinates for cylinder
 
-  // Cylinder settings
-  GLdouble slices = 12.0f;
+  GLUquadricObj* quad = gluNewQuadric();
+  GLUquadricObj* disk1 = gluNewQuadric();
+  GLUquadricObj* disk2 = gluNewQuadric();
+
+  GLdouble slices = 12.0;
   GLdouble stack = 1.0f;
 
   glPushMatrix();
-  glRotatef(-90, 1, 0, 0);
-  // Draw cylinder
-  gluCylinder(quad_obj, radius, radius, height, slices, stack);
 
+  // Draw hollow cylinder
+  glRotatef(-90.0f, 1.0f, 0.0f, 0.0f);
+  glTranslatef(0.0f, 0.0f, -y);
+  gluCylinder(quad, radius, radius, height, slices, stack);
+
+  // Draw closing disks
   gluDisk(disk1, 0, radius, slices, stack);
-  glTranslatef(0, 0, height);
+  glTranslatef(0.0f, 0.0f, height);
   gluDisk(disk2, 0, radius, slices, stack);
-  
+
   glPopMatrix();
 }

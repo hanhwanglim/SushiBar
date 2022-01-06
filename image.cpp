@@ -1,12 +1,8 @@
 #include "image.h"
 
-#include <cstdlib>
-#include <iostream>
-#include <vector>
-
 /**
  * @brief Create image
- * 
+ *
  * @param path file path
  */
 Image::Image(const std::string& path) {
@@ -18,7 +14,7 @@ Image::Image(const std::string& path) {
 
   _image = new unsigned char[_width * _height * 3];
 
-  // Load image 
+  // Load image
   unsigned int nm = _width * _height;
   for (unsigned int i = 0; i < nm; i++) {
     std::div_t part = std::div((int)i, (int)_width);
@@ -31,10 +27,10 @@ Image::Image(const std::string& path) {
 
 /**
  * @brief Returns a pointer to the image data
- * 
- * @return Pointer to the image data
+ *
+ * @return const unsigned char* Pointer to the image data
  */
-unsigned char* Image::data() const { return _image; }
+const unsigned char* Image::data() const { return _image; }
 
 Image::~Image() {
   delete _image;

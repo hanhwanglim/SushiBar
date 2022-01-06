@@ -1,14 +1,10 @@
 #ifndef SHAPE_H
 #define SHAPE_H
 
-#include <QOpenGLFunctions>
-
-class Shape : protected QOpenGLFunctions {
+class Shape {
  public:
-  void drawCuboid(float width, float height, float breadth, float centreX,
-                  float centreY, float centreZ);
-
+  void drawCuboid(float w, float h, float d, float x, float y, float z);
   void drawClosedCylinder(float radius, float height);
 };
 
-#endif  // SHAPE_H
+#endif

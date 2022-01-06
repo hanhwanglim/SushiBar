@@ -1,23 +1,24 @@
 #ifndef GLOBE_H
 #define GLOBE_H
 
-#include <QOpenGLFunctions>
-
 #include "image.h"
+#include "shape.h"
 
-class Globe : protected QOpenGLFunctions {
+class Globe {
  public:
   Globe();
   ~Globe();
 
   void globe();
-  void draw();
+  void drawGlobe();
 
  private:
-  Image* _image;
-  float _angle = 0;
+  Image* _image;    // Texture image
+  Shape s;          // Object to construct shapes
+
+  float _angle;     // Angle to control rotation of globe
 
   void updateAngle();
 };
 
-#endif  // GLOBE_H
+#endif

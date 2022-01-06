@@ -1,3 +1,7 @@
+/*
+ * Code was sourced and modified from SolidCube texture tutorial
+ */
+
 #ifndef IMAGE_H
 #define IMAGE_H
 
@@ -11,7 +15,7 @@ class Image {
 
   ~Image();
 
-  unsigned char* data() const;
+  const unsigned char* data() const;
 
   /**
    * @brief Returns the width of the image
@@ -38,4 +42,4 @@ class Image {
   unsigned char* _image;
 };
 
-#endif  // IMAGE_H
+#endif

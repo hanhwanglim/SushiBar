@@ -1,18 +1,24 @@
 #ifndef SUSHI_H
 #define SUSHI_H
 
+#include <glm/glm.hpp>
+
+#include "shape.h"
 #include "trackobject.h"
 
 class Sushi : public TrackObject {
  public:
-  Sushi();
   Sushi(glm::vec3 position);
+  ~Sushi();
 
   void plate();
-  void drawSushi();
   void sushi();
+  void drawSushi();
 
   void draw();
+
+ private:
+  Shape s;
 };
 
-#endif  // SUSHI_H
+#endif

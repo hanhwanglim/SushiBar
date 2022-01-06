@@ -1,26 +1,27 @@
 #include "luckycat.h"
+#include "material.h"
 
 #include <GL/glu.h>
 
-#include <iostream>
-
+/**
+ * @brief Construct a new Lucky Cat:: Lucky Cat object
+ * 
+ */
 LuckyCat::LuckyCat() {
-  // Load model
-  _cat_body = new Model("./models/cat_body.obj");
-  _cat_hand = new Model("./models/cat_hand.obj");
+  _catBody = new Model("models/cat_body.obj");
+  _catHand = new Model("models/cat_hand.obj");
 
-  // Setup position in the scene
-  position = glm::vec3(0.0f, -1.7f, 0.7f);
+  // Initialise at section 3 of the track
 
-  this->radius = 0.7f;
-  this->angle = 90.0f;
-  section3 = true;
+  _position = glm::vec3(0.0f, -1.7f, 0.7f);
 
-  // Material properties
-  material = {{0.0f, 0.0f, 0.0f, 1.0f},
-              {0.0, 0.0, 0.0, 1.0f},
-              {0.6f, 0.6f, 0.5f, 1.0f},
-              32.0f};
+  _angle = 90.0f;
+  _section1 = false;
+  _section2 = false;
+  _section3 = true;
+  _section4 = false;
+
+  loadModel();
 }
 
 /**
@@ -29,7 +30,7 @@ LuckyCat::LuckyCat() {
  */
 void LuckyCat::draw() {
   glPushMatrix();
-  glTranslatef(position.x, position.y, position.z);
+  glTranslatef(_position.x, _position.y, _position.z);
   drawCat();
   glPopMatrix();
 
@@ -37,102 +38,130 @@ void LuckyCat::draw() {
 }
 
 /**
- * @brief Draws the cat on the scene
+ * @brief Draws a cat
  * 
  */
 void LuckyCat::drawCat() {
-  initializeOpenGLFunctions();
+  const float SCALE = 0.1f;
   glDisable(GL_LIGHTING);
-
-  // Color and material properties
-  glColor3f(0.89019608f, 0.63921569f, 0.23137255f);
-  glMaterialfv(GL_FRONT, GL_AMBIENT, material.ambient);
-  glMaterialfv(GL_FRONT, GL_DIFFUSE, material.diffuse);
-  glMaterialfv(GL_FRONT, GL_SPECULAR, material.specular);
-  glMaterialf(GL_FRONT, GL_SHININESS, material.shininess);
+  glColor3f(0.89f, 0.64f, 0.23f);
+  glMaterialfv(GL_FRONT, GL_AMBIENT, GOLD.ambient);
+  glMaterialfv(GL_FRONT, GL_DIFFUSE, GOLD.diffuse);
+  glMaterialfv(GL_FRONT, GL_SPECULAR, GOLD.specular);
+  glMaterialf(GL_FRONT, GL_SHININESS, GOLD.shininess);
 
   // Draw body
-  glRotatef(-angle + 90.0f, 0, 1, 0);
+  glRotatef(-_angle + 90.0f, 0.0f, 1.0f, 0.0f);
   glPushMatrix();
-  glScalef(0.1, 0.1, 0.1);
+  glScalef(SCALE, SCALE, SCALE);
   drawBody();
 
   // Draw hand
-  glColor3f(0.98039216f, 0.81176471f, 0.30588235f);
-  glMaterialfv(GL_FRONT, GL_AMBIENT, material.ambient);
-  glMaterialfv(GL_FRONT, GL_DIFFUSE, material.diffuse);
-  glMaterialfv(GL_FRONT, GL_SPECULAR, material.specular);
-  glMaterialf(GL_FRONT, GL_SHININESS, material.shininess);
-
-  // Calculate hand rotation angle
-  const float PI = 3.141593;
-  float handAngle = 90.0f * sin(_handAngle * PI / 180.0f);
-
-  glTranslatef(0, 7, 0);
-  glRotatef(handAngle, 1, 0, 0);
-  glTranslatef(0, -7, 0);
+  float angle =
+      45.0f * glm::sin(_handAngle * glm::pi<float>() / 180.0f) + 45.0f;
+  glColor3f(0.98f, 0.81f, 0.30f);
+  glTranslatef(0.0f, 7.0f, 0.0f);      // Offset to hand position
+  glRotatef(angle, 1.0f, 0.0f, 0.0f);  // Perform hand rotation
+  glTranslatef(0.0f, -7.0f, 0.0f);     // Return back to original position
 
   drawHand();
 
   glPopMatrix();
+  glEnable(GL_LIGHTING);
 
-  // Update hand angle
+  updateAngle();
+}
+
+/**
+ * @brief Draws the cat's body
+ * 
+ */
+void LuckyCat::drawBody() {
+  glBegin(GL_TRIANGLES);
+
+  for (unsigned int i = 0; i < _vertexIndicesBody.size(); i++) {
+    unsigned int normalIndex = _normalIndicesBody[i] - 1;
+    unsigned int vertexIndex = _vertexIndicesBody[i] - 1;
+
+    glm::vec3 normal = _normalBody[normalIndex];
+    glm::vec3 vertex = _vertexBody[vertexIndex];
+
+    glNormal3f(normal.x, normal.y, normal.z);
+    glVertex3f(vertex.x, vertex.y, vertex.z);
+  }
+
+  glEnd();
+}
+
+/**
+ * @brief Draws the cat's hand
+ * 
+ */
+void LuckyCat::drawHand() {
+  glBegin(GL_TRIANGLES);
+
+  for (unsigned int i = 0; i < _vertexIndicesHand.size(); i++) {
+    unsigned int normalIndex = _normalIndicesHand[i] - 1;
+    unsigned int vertexIndex = _vertexIndicesHand[i] - 1;
+
+    glm::vec3 normal = _normalHand[normalIndex];
+    glm::vec3 vertex = _vertexHand[vertexIndex];
+
+    glNormal3f(normal.x, normal.y, normal.z);
+    glVertex3f(vertex.x, vertex.y, vertex.z);
+  }
+
+  glEnd();
+}
+
+/**
+ * @brief Loads the cat's model data
+ * 
+ */
+void LuckyCat::loadModel() {
+  loadBody();
+  loadHand();
+}
+
+/**
+ * @brief Loads the cat's model's body data
+ * 
+ */
+void LuckyCat::loadBody() {
+  _vertexBody = _catBody->vertices();
+  _normalBody = _catBody->normals();
+  _textureBody = _catBody->texCoord();
+
+  _vertexIndicesBody = _catBody->vertexIndices();
+  _normalIndicesBody = _catBody->normalIndices();
+  _textureIndicesBody = _catBody->textureIndices();
+}
+
+/**
+ * @brief Loads the cat's model's hand data
+ * 
+ */
+void LuckyCat::loadHand() {
+  _vertexHand = _catHand->vertices();
+  _normalHand = _catHand->normals();
+  _textureHand = _catHand->texCoord();
+
+  _vertexIndicesHand = _catHand->vertexIndices();
+  _normalIndicesHand = _catHand->normalIndices();
+  _textureIndicesHand = _catHand->textureIndices();
+}
+
+/**
+ * @brief Updates the hand angle at each tick
+ * 
+ */
+void LuckyCat::updateAngle() {
   _handAngle += 5.0f;
 
-  if (_handAngle >= 180) _handAngle = 0;
-
-  glEnable(GL_LIGHTING);
-}
-
-void LuckyCat::drawBody() {
-  // Load vertices data
-  std::vector<glm::vec3> vertices = _cat_body->vertices;
-  std::vector<glm::vec3> normals = _cat_body->normals;
-  std::vector<unsigned int> vertexIndice = _cat_body->vertexIndices;
-  std::vector<unsigned int> normalIndice = _cat_body->normalIndices;
-  std::vector<unsigned int> textureIndice = _cat_body->textureIndices;
-
-  // Draw shape
-  glBegin(GL_TRIANGLES);
-
-  for (unsigned int i = 0; i < vertexIndice.size(); i++) {
-    int normalIndex = normalIndice[i] - 1;
-    glm::vec3 normal = normals[normalIndex];
-    glNormal3f(normal.x, normal.y, normal.z);
-
-    int vertexIndex = vertexIndice[i] - 1;
-    glm::vec3 vertex = vertices[vertexIndex];
-    glVertex3f(vertex.x, vertex.y, vertex.z);
-  }
-
-  glEnd();
-}
-
-void LuckyCat::drawHand() {
-  // Load vertices data
-  std::vector<glm::vec3> vertices = _cat_hand->vertices;
-  std::vector<glm::vec3> normals = _cat_hand->normals;
-  std::vector<unsigned int> vertexIndice = _cat_hand->vertexIndices;
-  std::vector<unsigned int> normalIndice = _cat_hand->normalIndices;
-  std::vector<unsigned int> textureIndice = _cat_hand->textureIndices;
-
-  // Draw shape
-  glBegin(GL_TRIANGLES);
-
-  for (unsigned int i = 0; i < vertexIndice.size(); i++) {
-    int normalIndex = normalIndice[i] - 1;
-    glm::vec3 normal = normals[normalIndex];
-    glNormal3f(normal.x, normal.y, normal.z);
-
-    int vertexIndex = vertexIndice[i] - 1;
-    glm::vec3 vertex = vertices[vertexIndex];
-    glVertex3f(vertex.x, vertex.y, vertex.z);
-  }
-
-  glEnd();
+  if (_handAngle >= 360.0f) _handAngle = 0;
 }
 
 LuckyCat::~LuckyCat() {
-  delete _cat_hand;
-  delete _cat_body;
+  delete _catBody;
+  delete _catHand;
 }

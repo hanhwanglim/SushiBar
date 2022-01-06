@@ -1,18 +1,12 @@
 #ifndef PICTURE_H
 #define PICTURE_H
 
-
-#include <QOpenGLFunctions>
-
-#include <GL/glu.h>
+#include "image.h"
 
 #include <string>
 
-#include "image.h"
-
-class Picture : protected QOpenGLFunctions {
+class Picture {
  public:
-  Picture();
   Picture(const std::string path);
   ~Picture();
 
@@ -24,4 +18,4 @@ class Picture : protected QOpenGLFunctions {
   unsigned int texture;
 };
 
-#endif  // PICTURE_H
+#endif

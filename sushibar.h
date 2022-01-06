@@ -1,61 +1,47 @@
-#ifndef SUSHI_BAR_H
-#define SUSHI_BAR_H
-
-#include <QGLWidget>
-#include <QMouseEvent>
-#include <QOpenGLFunctions>
-#include <QTimer>
-#include <QWidget>
-
-#include <vector>
+#ifndef SUSHIBAR_H
+#define SUSHIBAR_H
 
 #include "camera.h"
-#include "globe.h"
-#include "lighting.h"
 #include "luckycat.h"
 #include "room.h"
 #include "shape.h"
 #include "sushi.h"
 
-class SushiBar : public QGLWidget, protected QOpenGLFunctions {
+#include <QGLWidget>
+#include <QImage>
+#include <QMouseEvent>
+
+#include <vector>
+
+class SushiBar : public QGLWidget {
   Q_OBJECT
 
  public:
   SushiBar(QWidget* parent);
   ~SushiBar();
 
-  std::vector<Sushi*> sushis;
-  LuckyCat* cat;
-
- private:
-  // Camera settings
-
-  Camera* camera;
-  QPoint mousePosition;
-  bool dragCamera = false;
-
-  // Objects
-
-  Room* room;
-  Sushi* sushi;
-  Lighting* lighting;
-  Globe* globe;
-
-  // Timer
-  QTimer* timer;
-
-  void drawAxis();
+  std::vector<Sushi*> _sushis;
+  LuckyCat* _cat;
 
  protected:
-  // OpenGL functions
   void initializeGL();
   void paintGL();
   void resizeGL(int w, int h);
 
-  // Mouse events
   void mouseMoveEvent(QMouseEvent* event);
   void mousePressEvent(QMouseEvent* event);
   void mouseReleaseEvent(QMouseEvent* event);
+
+ private:
+  void drawAll();
+  void axis();
+  void createSushis();
+
+  Camera* _camera;
+  QPoint _mousePos;
+  bool _dragCamera = false;
+
+  Room* _room;
 };
 
 #endif

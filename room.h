@@ -1,39 +1,34 @@
 #ifndef ROOM_H
 #define ROOM_H
 
-#include <QOpenGLFunctions>
-
 #include "globe.h"
-#include "image.h"
-#include "material.h"
 #include "picture.h"
-#include "shape.h"
 
-class Room : protected QOpenGLFunctions {
+#include <string>
+
+class Room {
  public:
   Room();
   ~Room();
 
-  // Objects
   void table();
   void seat();
-  void dividor();
+  void divider();
   void room();
   void track();
-  void pictures();
 
-  // Draw functions
+  void drawTable();
   void drawSeats();
+  void drawTrack();
   void drawRoom();
-  void drawGlobe();
-  void drawPictures();
+  void drawPicture();
 
   void drawAll();
 
  private:
-  Picture* marc;
-  Picture* markus;
-  Globe* globe;
+  Globe* _globe;
+  Picture* _marc;
+  Picture* _markus;
 };
 
-#endif  // ROOM_H
+#endif

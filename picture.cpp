@@ -1,5 +1,7 @@
 #include "picture.h"
 
+#include <GL/glu.h>
+
 /**
  * @brief Construct a new Picture:: Picture object
  * 
